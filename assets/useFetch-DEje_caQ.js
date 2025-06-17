@@ -1,1 +1,0 @@
-import{u as n,Q as u}from"./useBaseQuery-BtQ3YBYz.js";function o(e,t){return n(e,u)}const c=(e,t,s={})=>o({queryKey:e,queryFn:async()=>{const r=await fetch(`https://autorent-db.onrender.com${t}`);if(!r.ok)throw new Error(`ارور: ${r.status}`);return r.json()},...s});export{c as u};
