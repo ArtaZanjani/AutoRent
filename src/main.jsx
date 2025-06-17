@@ -7,6 +7,7 @@ import { ErrorProvider } from "@/context/ErrorContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { AlertDialogProvider } from "@/context/AlertDialogProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { HashRouter } from "react-router-dom";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,16 +23,18 @@ const queryClient = new QueryClient({
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <AlertDialogProvider>
-        <SearchProvider>
-          <ErrorProvider>
-            <AuthProvider>
-              <App />
-            </AuthProvider>
-          </ErrorProvider>
-        </SearchProvider>
-      </AlertDialogProvider>
-    </QueryClientProvider>
+    <HashRouter>
+      <QueryClientProvider client={queryClient}>
+        <AlertDialogProvider>
+          <SearchProvider>
+            <ErrorProvider>
+              <AuthProvider>
+                <App />
+              </AuthProvider>
+            </ErrorProvider>
+          </SearchProvider>
+        </AlertDialogProvider>
+      </QueryClientProvider>
+    </HashRouter>
   </StrictMode>
 );
