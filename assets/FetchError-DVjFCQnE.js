@@ -1,0 +1,1 @@
+import{c as a,t as c,d as n,u as f,r as i,j as l}from"./index-CCsVsDfE.js";import{F as u}from"./FetchErrorComp-C2XEjfJV.js";const p=()=>{const{clearErrors:o}=a(),{setIsScrolling:r}=c(),t=n(),s=f();i.useEffect(()=>{t.pathname==="/fetcherror"&&r(!1)},[t.pathname,r]);const e=()=>{o(),s("/")};return l.jsx(u,{refetch:e})};export{p as default};
