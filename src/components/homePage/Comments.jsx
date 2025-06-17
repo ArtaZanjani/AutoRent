@@ -64,7 +64,7 @@ const Comments = () => {
           {comments?.length > 0 ? (
             <>
               <div className="w-full min-h-[391px] bg-white border border-neutral-gray-2 rounded-2xl py-4 flex flex-col justify-start items-center gap-y-5">
-                <div className={`w-34 h-34 rounded-full overflow-hidden pointer-events-none`}>{errorList.includes(activeId) ? <User width="100%" height="100%" /> : <BaseImage src={`${import.meta.env.VITE_API_PROFILE_IMAGE}${fincById.user?.avatar_url}`} alt={fincById?.user?.name} className="w-full h-full object-cover" onError={() => setErrorList((prev) => [...prev, fincById?.id])} />}</div>
+                <div className={`w-34 h-34 rounded-full overflow-hidden pointer-events-none`}>{errorList.includes(activeId) ? <User width="100%" height="100%" /> : <BaseImage src={`${import.meta.env.VITE_API_PROFILE_IMAGE}${fincById.user?.avatar_url}`} alt={`${fincById.user?.fName} ${fincById.user?.lName}`} className="w-full h-full object-cover" onError={() => setErrorList((prev) => [...prev, fincById?.id])} />}</div>
 
                 <p className={`font-semibold`}>{fincById?.user?.name}</p>
 
@@ -82,7 +82,7 @@ const Comments = () => {
                   {comments?.map((e) => (
                     <SwiperSlide key={e.id}>
                       <div onClick={() => setActiveId(e.id)} className={`w-full h-24 flex flex-row justify-start gap-x-3 items-center transition-all border border-neutral-gray-2 p-4 rounded-2xl ${activeId === e.id ? "bg-secondary" : "bg-white"}`}>
-                        <div className="w-16 h-16 rounded-full overflow-hidden flex justify-center items-center bg-neutral-gray-2">{errorList.includes(e.id) ? <User width="100%" height="100%" /> : <BaseImage src={`${import.meta.env.VITE_API_PROFILE_IMAGE}${e.user?.avatar_url}`} alt={e.user?.name} className="w-full h-full object-cover" onError={() => setErrorList((prev) => [...prev, e.id])} />}</div>
+                        <div className="w-16 h-16 rounded-full overflow-hidden flex justify-center items-center bg-neutral-gray-2">{errorList.includes(e.id) ? <User width="100%" height="100%" /> : <BaseImage src={`${import.meta.env.VITE_API_PROFILE_IMAGE}${e.user?.avatar_url}`} alt={`${e.user?.fName} ${e.user?.lName}`} className="w-full h-full object-cover" onError={() => setErrorList((prev) => [...prev, e.id])} />}</div>
 
                         <div className="space-y-2 text-start">
                           <p className="text-neutral-gray-11 font-medium">
