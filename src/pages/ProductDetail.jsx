@@ -42,13 +42,6 @@ const ProductDetail = ({ setAuthOpen }) => {
     { label: "مدل", icon: <Star1 className="size-6 stroke-neutral-gray-8" />, value: dataCars?.yearOfManufacture },
   ];
 
-  useEffect(() => {
-    if (errorCars) {
-      toast.error(`خطا: ${errorCars.message}`);
-      navigate("/product-list");
-    }
-  }, [errorCars, navigate]);
-
   const getRow = (label, getValue) => (
     <div className="grid grid-cols-3 w-full whitespace-nowrap text-sm md:text-base border-b border-b-neutral-gray-2 py-2 items-center last:border-b-0">
       <div className="text-sm font-semibold text-black col-start-1 row-start-1">{label}</div>
@@ -180,6 +173,7 @@ const ProductDetail = ({ setAuthOpen }) => {
         },
         insuranceOptions: dataCars?.insuranceOptions?.find((option) => option.type === InsuranceType) || null,
       });
+
       navigate("/payment/1");
     } else {
       setAuthOpen();

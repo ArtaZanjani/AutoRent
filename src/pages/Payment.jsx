@@ -7,12 +7,14 @@ import Specifications from "@/components/Payment/Specifications";
 import Rules from "@/components/Payment/Rules";
 import PaymentDetails from "@/components/Payment/PaymentDetails";
 import Delivery from "@/components/Payment/Delivery";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 const Payment = () => {
   const { step } = useParams();
   const { BookingData } = useContext(SearchContext);
   const stepNumber = parseInt(step, 5);
   const location = useLocation();
+  const matches = useMediaQuery("(min-width: 768px)");
 
   const allStep = [
     {
@@ -63,7 +65,7 @@ const Payment = () => {
       />
 
       <div className="w-full Padding">
-        <div className="w-full flex items-center gap-x-3">
+        <div className="w-full flex flex-col md:flex-row items-center gap-3">
           {allStep.map((e, index) => {
             const Icon = e.icon;
             return (
@@ -84,7 +86,7 @@ const Payment = () => {
                   <p className="w-fit text-neutral-gray-7">{e.Label}</p>
                 </div>
 
-                {index !== allStep.length - 1 && <hr className="border border-neutral-gray-4 flex-1 -translate-y-3.5" />}
+                {index !== allStep.length - 1 && <hr className={`border border-neutral-gray-4 ${matches ? "flex-1 -translate-y-3.5" : "w-0.5 h-20"}`} />}
               </React.Fragment>
             );
           })}
