@@ -105,7 +105,7 @@ const Home = () => {
   return (
     <>
       <main className="SpaceYCustom">
-        <div className="w-full h-[600px] relative">
+        <div className="w-full h-[500px] relative">
           <BaseImage src={Banner} alt={`${import.meta.env.VITE_APP_NAME} - رزرو خودرو`} className="w-full h-full object-cover" />
 
           <div className="absolute top-[200px] sm:right-0 Padding z-10 flex flex-col justify-start items-center sm:items-start w-full sm:w-fit">

@@ -1,5 +1,5 @@
 import Breadcrumbs from "@/components/common/Breadcrumbs";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { useLocation, useParams, Navigate } from "react-router-dom";
 import { SearchContext } from "@/context/SearchProvider";
 import { Personalcard, DocumentText1, Card, Car } from "iconsax-react";
