@@ -57,24 +57,24 @@ const BlogCard = ({ blog }) => {
 
   return (
     <article itemScope itemType="https://schema.org/Article" className="w-full xs:w-98 h-92.5 bg-white border border-neutral-gray-2 rounded-2xl overflow-hidden">
-      <Link to={`/blog/${id}`} className="no-underline text-inherit w-full h-full flex flex-col justify-between items-center p-4" itemProp="url">
+      <Link to={`/blog/${id}`} className="flex flex-col items-center justify-between w-full h-full p-4 no-underline text-inherit" itemProp="url">
         <div className={`w-full h-49 rounded-xl overflow-hidden relative ${imageError ? "p-10 bg-primary/20" : ""}`}>
           <BaseImage src={`${import.meta.env.VITE_API_BLOGS_IMAGE}${image}`} alt={title} className={`w-full h-full ${imageError ? "object-contain" : "object-cover"}`} onError={() => setImageError(true)} />
         </div>
 
-        <h2 className="font-medium text-neutral-gray-11 w-full" itemProp="headline">
+        <h2 className="w-full font-medium text-neutral-gray-11" itemProp="headline">
           {title}
         </h2>
 
-        <p className="text-xs text-neutral-gray-9 font-medium leading-relaxed line-clamp-1 sm:line-clamp-2 w-full" itemProp="description">
+        <p className="w-full text-xs font-medium leading-relaxed text-neutral-gray-9 line-clamp-1 sm:line-clamp-2" itemProp="description">
           {description}
         </p>
 
         {metaData.map(renderMeta)}
 
-        <div className="flex items-center justify-between text-xs text-neutral-gray-6 w-full">
+        <div className="flex items-center justify-between w-full text-xs text-neutral-gray-6">
           {infoItems.map(({ icon, label, key, itemProp }) => (
-            <span key={key} {...(itemProp ? { itemProp } : {})} className="flex text-sm items-center gap-1 text-neutral-gray-9">
+            <span key={key} {...(itemProp ? { itemProp } : {})} className="flex items-center gap-1 text-sm text-neutral-gray-9">
               {icon}
               {label}
             </span>

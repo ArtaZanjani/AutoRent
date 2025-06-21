@@ -35,9 +35,9 @@ const AccordionHome = () => {
   return (
     <>
       <BaseSection title="سؤالات متداول" highlight={import.meta.env.VITE_APP_NAME} description="پر تکرارترین سؤالاتی که پرسیدید">
-        <div className="w-full flex flex-col lg:flex-row justify-between items-center lg:items-start gap-x-6 mt-10">
-          <div className="h-full w-full lg:w-fit lg:flex-1/2">
-            <Accordion type="single" collapsible value={openItem} onValueChange={handleChange} className="text-neutral-gray-7 w-full space-y-3 leading-loose text-sm mt-2">
+        <div className="flex flex-col items-center justify-between w-full mt-10 lg:flex-row lg:items-start gap-x-6">
+          <div className="w-full h-full lg:w-fit lg:flex-1/2">
+            <Accordion type="single" collapsible value={openItem} onValueChange={handleChange} className="w-full mt-2 space-y-3 text-sm leading-loose text-neutral-gray-7">
               {faqData.map((item, index) => {
                 const value = `item-${index}`;
                 const isOpen = openItem === value;
@@ -45,9 +45,9 @@ const AccordionHome = () => {
                 return (
                   <AccordionItem value={value} key={index} className="!border-2 !outline-0 rounded-2xl bg-white border-neutral-gray-2 w-full px-4 py-2">
                     <AccordionTrigger className="w-full [&>svg]:hidden no-underline hover:no-underline focus-visible:!ring-0 focus-visible:!ring-ring/0">
-                      <div className="w-full flex items-center gap-x-3">
+                      <div className="flex items-center w-full gap-x-3">
                         {isOpen ? <MinusSquare className="size-6 fill-primary" variant="Outline" aria-hidden="true" /> : <AddSquare className="size-6 fill-primary" variant="Outline" aria-hidden="true" />}
-                        <span className="text-start font-semibold text-sm xs:text-base text-neutral-gray-10 flex-1"> {item.title}</span>
+                        <span className="flex-1 text-sm font-semibold text-start xs:text-base text-neutral-gray-10"> {item.title}</span>
                       </div>
                     </AccordionTrigger>
 

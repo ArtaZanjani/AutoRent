@@ -152,11 +152,11 @@ const ContactUs = () => {
     <main className="w-full min-h-screen">
       <Breadcrumbs title="تماس با ما" crumbs={[{ path: null, title: "تماس با ما" }]} />
 
-      <div className="w-full Padding flex flex-col items-center gap-y-14">
+      <div className="flex flex-col items-center w-full Padding gap-y-14">
         <section className="w-full min-h-[394px] bg-white shadow-2xl border border-neutral-gray-2 rounded-2xl p-8 space-y-7.5">
-          <h2 className="text-neutral-gray-9 text-2xl font-medium">ارتباط با دفتر مرکزی اتورنت</h2>
+          <h2 className="text-2xl font-medium text-neutral-gray-9">ارتباط با دفتر مرکزی اتورنت</h2>
 
-          <div className="w-full flex flex-col gap-y-10 lg:flex-row justify-between items-start">
+          <div className="flex flex-col items-start justify-between w-full gap-y-10 lg:flex-row">
             <div className="flex flex-col gap-y-8">
               {dataContact.map((item, index) => (
                 <div className="flex items-center gap-x-2.5" key={index}>
@@ -178,9 +178,9 @@ const ContactUs = () => {
         </section>
 
         <section className="w-full bg-white shadow-2xl border border-neutral-gray-2 rounded-2xl p-8 space-y-7.5">
-          <h2 className="text-neutral-gray-9 text-2xl font-medium">ارسال پیام شما به مجموعه اتورنت</h2>
+          <h2 className="text-2xl font-medium text-neutral-gray-9">ارسال پیام شما به مجموعه اتورنت</h2>
 
-          <div className="w-full flex flex-col xl:flex-row justify-between items-start gap-10">
+          <div className="flex flex-col items-start justify-between w-full gap-10 xl:flex-row">
             <div className="flex flex-col justify-between gap-y-6 w-full  xl:w-fit xl:min-h-[227px]">
               {inputs.slice(0, 3).map((input, index) => {
                 const filled = isFilled(input);
@@ -214,13 +214,13 @@ const ContactUs = () => {
                       />
                     </div>
 
-                    {input.error && input.value.length > 0 ? <p className="text-red-500 text-xs mt-1 mr-2">{input.error}</p> : ""}
+                    {input.error && input.value.length > 0 ? <p className="mt-1 mr-2 text-xs text-red-500">{input.error}</p> : ""}
                   </div>
                 );
               })}
             </div>
 
-            <div className="flex-1 flex flex-col w-full xl:w-fit">
+            <div className="flex flex-col flex-1 w-full xl:w-fit">
               {inputs.slice(3).map((input, index) => (
                 <div key={index} className="w-full">
                   <div className="relative">
@@ -230,9 +230,9 @@ const ContactUs = () => {
                     <textarea id={`textarea-${index}`} className={`w-full min-h-34 border inpBase pt-2 ${input.error ? "border-error" : input.value ? "border-info-light-1" : "border-neutral-gray-4"}`} value={input.value} onChange={(e) => handleChange(index + 3, e.target.value)} maxLength={input.maxLength} />
                   </div>
 
-                  {input.error && input.value.length > 0 && <p className="text-red-500 text-xs mt-1 mr-2">{input.error}</p>}
+                  {input.error && input.value.length > 0 && <p className="mt-1 mr-2 text-xs text-red-500">{input.error}</p>}
 
-                  <p className="text-neutral-gray-5 text-sm font-medium text-left mt-2">
+                  <p className="mt-2 text-sm font-medium text-left text-neutral-gray-5">
                     {input.value.length}/{input.maxLength}
                   </p>
                 </div>

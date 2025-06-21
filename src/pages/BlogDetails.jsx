@@ -44,27 +44,27 @@ const BlogDetails = () => {
           ]}
         />
 
-        <div className="w-full Padding flex flex-col gap-y-4 animate-pulse">
+        <div className="flex flex-col w-full Padding gap-y-4 animate-pulse">
           <div className="h-[48px] w-3/4 bg-neutral-gray-3 rounded-md"></div>
 
-          <div className="w-full flex items-center gap-6">
+          <div className="flex items-center w-full gap-6">
             {Array.from({ length: 2 }).map((_, index) => (
               <div className="flex items-center gap-x-2.5" key={index}>
-                <div className="h-5 w-5 rounded bg-neutral-gray-3"></div>
-                <div className="h-4 w-20 rounded bg-neutral-gray-3"></div>
+                <div className="w-5 h-5 rounded bg-neutral-gray-3"></div>
+                <div className="w-20 h-4 rounded bg-neutral-gray-3"></div>
               </div>
             ))}
           </div>
 
           <div className="w-full h-[386px] bg-neutral-gray-3 rounded-2xl"></div>
 
-          <div className="space-y-8 w-full">
+          <div className="w-full space-y-8">
             {Array.from({ length: 3 }).map((_, index) => (
               <div className="flex flex-col gap-y-4" key={index}>
                 <div className="h-[40px] w-1/2 bg-neutral-gray-3 rounded"></div>
-                <div className="h-4 bg-neutral-gray-3 rounded" style={{ width: randomWidth() }}></div>
-                <div className="h-4 bg-neutral-gray-3 rounded" style={{ width: randomWidth() }}></div>
-                <div className="h-4 bg-neutral-gray-3 rounded" style={{ width: randomWidth() }}></div>
+                <div className="h-4 rounded bg-neutral-gray-3" style={{ width: randomWidth() }}></div>
+                <div className="h-4 rounded bg-neutral-gray-3" style={{ width: randomWidth() }}></div>
+                <div className="h-4 rounded bg-neutral-gray-3" style={{ width: randomWidth() }}></div>
               </div>
             ))}
           </div>
@@ -83,26 +83,26 @@ const BlogDetails = () => {
         ]}
       />
 
-      <div className="w-full Padding flex flex-col gap-y-4">
+      <div className="flex flex-col w-full Padding gap-y-4">
         <h2 className="font-bold text-neutral-gray-11 text-[clamp(1.75rem,4vw,2.75rem)]">{data?.title}</h2>
 
-        <div className="w-full flex items-center gap-6">
+        <div className="flex items-center w-full gap-6">
           {dataMap.map((e, index) => (
             <div className="flex items-center gap-x-2.5" key={index}>
               <div>{e.icon}</div>
-              <p className="text-neutral-gray-8 text-sm font-medium">{e.value}</p>
+              <p className="text-sm font-medium text-neutral-gray-8">{e.value}</p>
             </div>
           ))}
         </div>
 
         <BaseImage src={`${import.meta.env.VITE_API_BLOGS_IMAGE}${data?.image}`} className="w-full h-[386px] object-cover rounded-2xl" />
 
-        <div className="space-y-8 w-full">
+        <div className="w-full space-y-8">
           {data?.mainDescription?.map((e, index) => (
             <div className="flex flex-col gap-y-4" key={index}>
               <strong className="text-[clamp(1.75rem,4vw,2.75rem)] text-neutral-gray-11">{e.title}</strong>
 
-              <p className="text-neutral-gray-9 text-base font-medium leading-loose">{e.description}</p>
+              <p className="text-base font-medium leading-loose text-neutral-gray-9">{e.description}</p>
             </div>
           ))}
         </div>

@@ -199,11 +199,11 @@ const Auth = ({ isAuthOpen, onClose }) => {
     <BaseBg isOpen={isAuthOpen} onClose={onClose}>
       <motion.div onClick={(e) => e.stopPropagation()} className="w-full overflow-y-auto h-full sm:w-[608px] sm:h-fit sm:min-h-fit flex flex-col items-center p-4 sm:p-8 bg-white sm:rounded-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" initial={{ y: 100 }} animate={{ y: 0 }} exit={{ y: 100 }} transition={{ duration: 0.225, ease: [0.4, 0, 0.2, 1] }}>
         <button onClick={onClose} className="w-8.5 h-8.5 xs:w-10 xs:h-10 bg-neutral-gray-2 hover:bg-neutral-gray-3 rounded-full absolute top-3 left-3 xs:top-5 xs:left-5 flex justify-center items-center">
-          <Add className="size-full rotate-45 stroke-neutral-gray-9" />
+          <Add className="rotate-45 size-full stroke-neutral-gray-9" />
         </button>
 
-        <BaseImage src={Logo} alt="Logo" className="w-38 h-auto object-contain" />
-        <p className="text-neutral-gray-9 text-xl mt-2">{authType}</p>
+        <BaseImage src={Logo} alt="Logo" className="object-contain h-auto w-38" />
+        <p className="mt-2 text-xl text-neutral-gray-9">{authType}</p>
         <div className="w-full space-y-7 sm:space-y-5 mt-7">
           {inputs.map((e) => (
             <div className="space-y-3" key={e.id}>
@@ -245,20 +245,20 @@ const Auth = ({ isAuthOpen, onClose }) => {
                 </div>
               </div>
 
-              {e.error && e.value.length > 0 && <p className="text-red-500 text-sm mt-1 pr-1">{e.error}</p>}
+              {e.error && e.value.length > 0 && <p className="pr-1 mt-1 text-sm text-red-500">{e.error}</p>}
             </div>
           ))}
         </div>
 
-        <button className="mt-5 text-sm btn-none-primary ml-auto" onClick={() => setAuthType(authType === "ورود" ? "ثبت نام" : "ورود")}>
+        <button className="mt-5 ml-auto text-sm btn-none-primary" onClick={() => setAuthType(authType === "ورود" ? "ثبت نام" : "ورود")}>
           {authType === "ورود" ? "حساب ندارید؟ ثبت نام" : "ورود به حساب"}
         </button>
 
-        <div className="flex items-center ml-auto mt-5 gap-x-2">
+        <div className="flex items-center mt-5 ml-auto gap-x-2">
           <CheckBox active={acceptRules} handleChange={() => setAcceptRules((prev) => !prev)} />
-          <div className="flex-1 text-xs xs:text-sm font-medium xs:font-normal">
+          <div className="flex-1 text-xs font-medium xs:text-sm xs:font-normal">
             با ورود و ثبت‌نام در سایت، با{" "}
-            <Link to="/rules" className="btn-none-primary text-xs xs:text-sm font-medium xs:font-normal">
+            <Link to="/rules" className="text-xs font-medium btn-none-primary xs:text-sm xs:font-normal">
               قوانین اتورنت
             </Link>{" "}
             موافقت می‌کنم.

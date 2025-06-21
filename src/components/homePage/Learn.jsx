@@ -18,7 +18,7 @@ const learnArray = [
     imageNumber: One,
     title: (
       <>
-        <span className="text-secondary-shade-1 text-lg sm:text-xl lg:text-2xl font-bold">خودروی</span> خود را انتخاب کنید.
+        <span className="text-lg font-bold text-secondary-shade-1 sm:text-xl lg:text-2xl">خودروی</span> خود را انتخاب کنید.
       </>
     ),
     description: (
@@ -32,7 +32,7 @@ const learnArray = [
     imageNumber: Tow,
     title: (
       <>
-        <span className="text-secondary-shade-1 text-lg sm:text-xl lg:text-2xl font-bold">تاریخ</span> تحویل را تعیین کنید.
+        <span className="text-lg font-bold text-secondary-shade-1 sm:text-xl lg:text-2xl">تاریخ</span> تحویل را تعیین کنید.
       </>
     ),
     description: (
@@ -46,7 +46,7 @@ const learnArray = [
     imageNumber: Three,
     title: (
       <>
-        <span className="text-secondary-shade-1 text-lg sm:text-xl lg:text-2xl font-bold">هزینه</span> اجاره را پرداخت کنید.
+        <span className="text-lg font-bold text-secondary-shade-1 sm:text-xl lg:text-2xl">هزینه</span> اجاره را پرداخت کنید.
       </>
     ),
     description: (
@@ -60,7 +60,7 @@ const learnArray = [
     imageNumber: Four,
     title: (
       <>
-        <span className="text-secondary-shade-1 text-lg sm:text-xl lg:text-2xl font-bold">خودرو</span> را دریافت کنید.
+        <span className="text-lg font-bold text-secondary-shade-1 sm:text-xl lg:text-2xl">خودرو</span> را دریافت کنید.
       </>
     ),
     description: (
@@ -80,25 +80,25 @@ const Learn = () => {
 
   return (
     <BaseSection title="خودرو رزرو کنیم؟" highlight={import.meta.env.VITE_APP_NAME} description="چگونه در وبسایت" highlightFirst={false} className="w-full space-y-12 xl:space-y-32">
-      <div ref={ref} className="w-full h-full relative px-4 sm:px-6 lg:px-8">
+      <div ref={ref} className="relative w-full h-full px-4 sm:px-6 lg:px-8">
         {isDesktop ? (
           <>
             <motion.div initial={{ opacity: 0, y: 100 }} animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }} transition={{ duration: 0.3, ease: "easeInOut" }}>
-              <BaseImage src={CarRoad} alt={`چگونه در وبسایت ${import.meta.env.VITE_APP_NAME}، خودرو رزرو کنیم`} className="mx-auto hidden md:block max-w-full h-auto" />
+              <BaseImage src={CarRoad} alt={`چگونه در وبسایت ${import.meta.env.VITE_APP_NAME}، خودرو رزرو کنیم`} className="hidden h-auto max-w-full mx-auto md:block" />
             </motion.div>
 
-            <div className="w-full absolute top-0 left-0 h-full">
+            <div className="absolute top-0 left-0 w-full h-full">
               <div className="w-full h-full grid grid-cols-[auto_auto] gap-x-8 gap-y-12 justify-between items-start p-8">
                 {learnArray.map((e, index) => (
-                  <div className="flex flex-row justify-start items-start gap-x-4" key={index}>
-                    <div className="w-20 h-20 rounded-2xl flex justify-center items-center bg-white border border-neutral-gray-2 relative flex-shrink-0 shadow-sm">
+                  <div className="flex flex-row items-start justify-start gap-x-4" key={index}>
+                    <div className="relative flex items-center justify-center flex-shrink-0 w-20 h-20 bg-white border shadow-sm rounded-2xl border-neutral-gray-2">
                       {e.icon}
-                      <BaseImage src={e.imageNumber} alt={`مرحله ${index + 1}`} className="absolute -z-10 left-0 -top-20" />
+                      <BaseImage src={e.imageNumber} alt={`مرحله ${index + 1}`} className="absolute left-0 -z-10 -top-20" />
                     </div>
 
-                    <div className="space-y-3 max-w-xs">
-                      <p className="text-2xl font-bold text-neutral-gray-11 leading-tight">{e.title}</p>
-                      <p className="text-base text-neutral-gray-8 font-medium leading-relaxed">{e.description}</p>
+                    <div className="max-w-xs space-y-3">
+                      <p className="text-2xl font-bold leading-tight text-neutral-gray-11">{e.title}</p>
+                      <p className="text-base font-medium leading-relaxed text-neutral-gray-8">{e.description}</p>
                     </div>
                   </div>
                 ))}
@@ -108,15 +108,15 @@ const Learn = () => {
         ) : (
           <div className="w-full space-y-12">
             {learnArray.map((e, index) => (
-              <div className="flex flex-row justify-start items-center gap-x-3 p-4 bg-white rounded-2xl border border-neutral-gray-2 shadow-sm" key={index}>
-                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex justify-center items-center bg-neutral-gray-1 border border-neutral-gray-2 relative flex-shrink-0">
+              <div className="flex flex-row items-center justify-start p-4 bg-white border shadow-sm gap-x-3 rounded-2xl border-neutral-gray-2" key={index}>
+                <div className="relative flex items-center justify-center flex-shrink-0 border w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-neutral-gray-1 border-neutral-gray-2">
                   {e.icon}
                   {isMobile && <BaseImage src={e.imageNumber} alt={`مرحله ${index + 1}`} className={`absolute -z-10 left-0 -top-15 md:-top-14 size-13`} />}
                 </div>
 
-                <div className="space-y-2 flex-1">
-                  <p className="text-lg xs:text-xl font-bold text-neutral-gray-11 leading-tight">{e.title}</p>
-                  <p className="text-xs xs:text-base text-neutral-gray-8 font-medium leading-relaxed">{e.description}</p>
+                <div className="flex-1 space-y-2">
+                  <p className="text-lg font-bold leading-tight xs:text-xl text-neutral-gray-11">{e.title}</p>
+                  <p className="text-xs font-medium leading-relaxed xs:text-base text-neutral-gray-8">{e.description}</p>
                 </div>
               </div>
             ))}

@@ -106,13 +106,13 @@ const Home = () => {
     <>
       <main className="SpaceYCustom">
         <div className="w-full h-[500px] relative">
-          <BaseImage src={Banner} alt={`${import.meta.env.VITE_APP_NAME} - رزرو خودرو`} className="w-full h-full object-cover" />
+          <BaseImage src={Banner} alt={`${import.meta.env.VITE_APP_NAME} - رزرو خودرو`} className="object-cover w-full h-full" />
 
           <div className="absolute top-[200px] sm:right-0 Padding z-10 flex flex-col justify-start items-center sm:items-start w-full sm:w-fit">
             <h1 className="text-secondary text-[25px] xs:text-[27px] sm:text-4xl md:text-[44px] font-bold text-center leading-relaxed">{import.meta.env.VITE_APP_NAME}؛ سریع، آسان و به‌صرفه</h1>
-            <p className="text-sm xs:text-xl font-semibold xs:font-normal text-white text-center mt-2">سرویس‌دهنده رزرو خودرو در ایران در کمترین زمان ممکن!</p>
-            <div className="flex flex-row justify-start items-center gap-x-4 mt-5" aria-label="CTA Buttons">
-              <Link to="/product-list" className="btnBase btn-fill-secondary h-12 font-semibold">
+            <p className="mt-2 text-sm font-semibold text-center text-white xs:text-xl xs:font-normal">سرویس‌دهنده رزرو خودرو در ایران در کمترین زمان ممکن!</p>
+            <div className="flex flex-row items-center justify-start mt-5 gap-x-4" aria-label="CTA Buttons">
+              <Link to="/product-list" className="h-12 font-semibold btnBase btn-fill-secondary">
                 <Car className="size-6 stroke-black" />
                 رزرو آسان خودرو
               </Link>
@@ -122,7 +122,7 @@ const Home = () => {
               </Link>
             </div>
           </div>
-          <div className="w-full h-full absolute top-0 left-0 bg-black/70 sm:bg-black/50 pointer-events-none" aria-hidden="true"></div>
+          <div className="absolute top-0 left-0 w-full h-full pointer-events-none bg-black/70 sm:bg-black/50" aria-hidden="true"></div>
         </div>
 
         <Swiper
@@ -139,16 +139,16 @@ const Home = () => {
         >
           {carBrands.map((e, index) => (
             <SwiperSlide className={`!w-fit ${matches ? "!m-0" : ""}`} key={index}>
-              <BaseImage src={e.icon} alt={e.label} className="w-20 h-20 object-contain" />
+              <BaseImage src={e.icon} alt={e.label} className="object-contain w-20 h-20" />
             </SwiperSlide>
           ))}
         </Swiper>
 
         <div className="Padding SpaceYCustom">
           <section aria-labelledby="why-us" className="relative h-[292px] w-full">
-            <BaseImage src={BannerAbout} alt={`چرا ${import.meta.env.VITE_APP_NAME} ؟`} className="w-full h-full object-cover absolute top-0 left-0 rounded-2xl" />
-            <div className="absolute top-5 left-1/2 -translate-x-1/2 space-y-3 w-full flex flex-col justify-start items-center">
-              <h2 id="why-us" className="text-secondary text-2xl font-semibold text-center">
+            <BaseImage src={BannerAbout} alt={`چرا ${import.meta.env.VITE_APP_NAME} ؟`} className="absolute top-0 left-0 object-cover w-full h-full rounded-2xl" />
+            <div className="absolute flex flex-col items-center justify-start w-full space-y-3 -translate-x-1/2 top-5 left-1/2">
+              <h2 id="why-us" className="text-2xl font-semibold text-center text-secondary">
                 چــــــرا {import.meta.env.VITE_APP_NAME} ؟
               </h2>
               <p className="text-center md:text-lg px-5 text-white leading-[180%] w-full lg:w-[95%] xl:w-[82%] 2xl:w-[65%]">اجاره خودرو از یک شرکت اجاره خودرو با سابقه به شما کمک می‌کند تا در سفرها، جلسات و مراسم‌های خانوادگی ماشین مناسب در اختیار داشته باشید.</p>
@@ -157,21 +157,21 @@ const Home = () => {
               <div className="absolute left-1/2 -translate-x-1/2 flex flex-row justify-center gap-x-10 items-center -bottom-[35%]">
                 {BannerAboutArray.map((e, index) => (
                   <article className="w-78 h-46.5 bg-white border border-neutral-gray-2 rounded-2xl py-4 px-6 flex flex-col justify-start items-center gap-y-3" key={index}>
-                    <div className="p-3 rounded-xl border-2 border-primary">{e.icon}</div>
-                    <h3 className="text-neutral-gray-10 font-bold">{e.title}</h3>
-                    <p className="text-xs text-neutral-gray-9 text-center font-medium">{e.content}</p>
+                    <div className="p-3 border-2 rounded-xl border-primary">{e.icon}</div>
+                    <h3 className="font-bold text-neutral-gray-10">{e.title}</h3>
+                    <p className="text-xs font-medium text-center text-neutral-gray-9">{e.content}</p>
                   </article>
                 ))}
               </div>
             )}
           </section>
           {!matches2 && (
-            <section className="flex flex-row justify-center flex-wrap items-center gap-3" aria-label="مزایای استفاده">
+            <section className="flex flex-row flex-wrap items-center justify-center gap-3" aria-label="مزایای استفاده">
               {BannerAboutArray.map((e, index) => (
                 <article className="w-78 h-46.5 bg-white border border-neutral-gray-2 rounded-2xl py-4 px-6 flex flex-col justify-start items-center gap-y-3" key={index}>
-                  <div className="p-2 xs:p-3 rounded-xl border-2 border-primary">{e.icon}</div>
-                  <h3 className="text-neutral-gray-10 font-bold">{e.title}</h3>
-                  <p className="text-xs text-neutral-gray-9 text-center font-medium">{e.content}</p>
+                  <div className="p-2 border-2 xs:p-3 rounded-xl border-primary">{e.icon}</div>
+                  <h3 className="font-bold text-neutral-gray-10">{e.title}</h3>
+                  <p className="text-xs font-medium text-center text-neutral-gray-9">{e.content}</p>
                 </article>
               ))}
             </section>
@@ -184,12 +184,12 @@ const Home = () => {
                 <React.Fragment key={index}>
                   {isSport && matches3 && matches4 && <div className="w-60 h-36" />}
 
-                  <div className="w-60 h-36 bg-white border border-neutral-gray-2 flex rounded-2xl overflow-hidden relative group">
-                    <Link to="/product-list" className="w-full h-full flex flex-col justify-start items-center pt-3 z-10">
-                      <h4 className="text-neutral-gray-10 text-2xl font-bold">{e.title}</h4>
+                  <div className="relative flex overflow-hidden bg-white border w-60 h-36 border-neutral-gray-2 rounded-2xl group">
+                    <Link to="/product-list" className="z-10 flex flex-col items-center justify-start w-full h-full pt-3">
+                      <h4 className="text-2xl font-bold text-neutral-gray-10">{e.title}</h4>
                       <BaseImage src={e.icon} alt="" className="w-[232px] h-25 object-contain" />
                     </Link>
-                    <div className="absolute rounded-t-lg bg-secondary left-1/2 -translate-x-1/2 bottom-0 transition-all duration-300 w-52 h-2 group-hover:h-10"></div>
+                    <div className="absolute bottom-0 h-2 transition-all duration-300 -translate-x-1/2 rounded-t-lg bg-secondary left-1/2 w-52 group-hover:h-10"></div>
                   </div>
                 </React.Fragment>
               );

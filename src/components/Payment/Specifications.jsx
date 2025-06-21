@@ -112,13 +112,13 @@ const Specifications = () => {
 
   return (
     <div className="mt-18.5">
-      <div className="w-full bg-primary/10 rounded-lg min-h-14 flex items-center p-3 gap-x-4">
+      <div className="flex items-center w-full p-3 rounded-lg bg-primary/10 min-h-14 gap-x-4">
         <Message className="size-8 stroke-primary" />
-        <p className="text-sm text-primary leading-relaxed flex-1">برای اعتبارسنجی قبل از تحویل خودرو، مستنداتی از شما درخواست می گردد، عدم ارائه این مستندات باعث لغو این رزرو خواهد شد.</p>
+        <p className="flex-1 text-sm leading-relaxed text-primary">برای اعتبارسنجی قبل از تحویل خودرو، مستنداتی از شما درخواست می گردد، عدم ارائه این مستندات باعث لغو این رزرو خواهد شد.</p>
       </div>
 
-      <div className="mt-14 w-full overflow-hidden rounded-lg border border-neutral-gray-1 bg-white shadow-2xl relative flex flex-col py-6">
-        <p className="text-neutral-gray-8 pb-4 px-6 border-b border-neutral-gray-8 font-medium">مشخصات کاربر</p>
+      <div className="relative flex flex-col w-full py-6 overflow-hidden bg-white border rounded-lg shadow-2xl mt-14 border-neutral-gray-1">
+        <p className="px-6 pb-4 font-medium border-b text-neutral-gray-8 border-neutral-gray-8">مشخصات کاربر</p>
         {matches && <BaseImage src={Car} alt="Car" className="w-[596px] h-auto object-contain absolute bottom-0 left-0" />}
 
         <div className={`w-full gap-x-12 gap-y-6.5 px-6 mt-8 grid ${matches ? "pl-80 grid-cols-1" : "grid-cols-1 md:grid-cols-2"}`}>
@@ -129,7 +129,7 @@ const Specifications = () => {
             return (
               <div className="space-y-2" key={index}>
                 <div className="relative">
-                  <div className="absolute top-1/2 -translate-y-1/2 right-2">
+                  <div className="absolute -translate-y-1/2 top-1/2 right-2">
                     <IconComponent className={`size-6 transition-all ${e.error ? "stroke-error" : filled ? "stroke-info-light-1" : index === activeIndex ? "stroke-neutral-gray-10" : "stroke-neutral-gray-4"}`} />
                   </div>
 
@@ -165,7 +165,7 @@ const Specifications = () => {
                   />
                 </div>
 
-                {e.error && <p className="text-red-500 text-xs mt-1 mr-2">{e.error}</p>}
+                {e.error && <p className="mt-1 mr-2 text-xs text-red-500">{e.error}</p>}
               </div>
             );
           })}

@@ -2,7 +2,7 @@ const BaseSection = ({ title, highlight = "", description = "", children, highli
   return (
     <section className={`w-full flex flex-col items-center justify-start ${className}`}>
       <div className="space-y-4 text-center">
-        {description && <p className="text-neutral-gray-8 text-2xl">{description}</p>}
+        {description && <p className="text-2xl text-neutral-gray-8">{description}</p>}
         {title && (
           <h2 className="font-bold text-[32px] text-neutral-gray-10">
             {highlightFirst ? (

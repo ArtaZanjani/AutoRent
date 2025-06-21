@@ -78,8 +78,8 @@ const Header = ({ onMenuClick, onSearchBarClick, setAuthOpen }) => {
   }
   return (
     <>
-      <header className="fixed top-0 left-0 w-full z-50 bg-white shadow-sm">
-        <div className="h-24 rounded-b-2xl flex justify-between items-center px-4 xl:px-8 mx-auto">
+      <header className="fixed top-0 left-0 z-50 w-full bg-white shadow-sm">
+        <div className="flex items-center justify-between h-24 px-4 mx-auto rounded-b-2xl xl:px-8">
           <Link to="/" className={`${!matches && "order-2"}`} aria-label="بازگشت به صفحه اصلی">
             <BaseImage src={Logo} alt="لوگوی رزرو خودرو" className="object-contain w-28 sm:w-32 2xl:w-auto h-[59px]" lazyLoad={false} />
           </Link>
@@ -94,12 +94,12 @@ const Header = ({ onMenuClick, onSearchBarClick, setAuthOpen }) => {
                   </Link>
                 ))}
                 <button onClick={onSearchBarClick} className="group" aria-label="جستجو">
-                  <SearchNormal1 className="size-6 stroke-neutral-gray-10 group-hover:stroke-primary transition-all" />
+                  <SearchNormal1 className="transition-all size-6 stroke-neutral-gray-10 group-hover:stroke-primary" />
                 </button>
               </nav>
               {isLoggedIn ? (
                 <div className="relative" onClick={(e) => e.stopPropagation()}>
-                  <button onClick={() => setOpenUserInfo((prev) => !prev)} className="group bg-primary/20 py-2 px-3 rounded-full flex items-center gap-x-2">
+                  <button onClick={() => setOpenUserInfo((prev) => !prev)} className="flex items-center px-3 py-2 rounded-full group bg-primary/20 gap-x-2">
                     <UserOctagon className="size-6 fill-primary" variant="Bold" />
                     <ArrowDown2 className={`size-6 stroke-primary customTransition ${openUserInfo ? "rotate-180" : "rotate-0"}`} />
                   </button>
@@ -116,13 +116,13 @@ const Header = ({ onMenuClick, onSearchBarClick, setAuthOpen }) => {
 
                           if (isButton) {
                             return (
-                              <button key={index} onClick={onClick} className="flex items-center gap-x-2 hover:bg-error/20 p-2">
+                              <button key={index} onClick={onClick} className="flex items-center p-2 gap-x-2 hover:bg-error/20">
                                 {content}
                               </button>
                             );
                           } else {
                             return (
-                              <Link key={index} to={to} className="flex items-center gap-x-2 hover:bg-primary/20 p-2">
+                              <Link key={index} to={to} className="flex items-center p-2 gap-x-2 hover:bg-primary/20">
                                 {content}
                               </Link>
                             );
@@ -133,20 +133,20 @@ const Header = ({ onMenuClick, onSearchBarClick, setAuthOpen }) => {
                   </AnimatePresence>
                 </div>
               ) : (
-                <button onClick={setAuthOpen} className="btnBase h-10 btn-fill-primary" aria-label="ورود / ثبت‌نام">
+                <button onClick={setAuthOpen} className="h-10 btnBase btn-fill-primary" aria-label="ورود / ثبت‌نام">
                   ورود / ثبت‌نام
                 </button>
               )}
             </>
           ) : (
             <>
-              <button className="group order-1" aria-label="باز کردن منو" onClick={() => onMenuClick(true)}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor" className="size-7 fill-neutral-gray-10 group-hover:fill-primary transition-all">
+              <button className="order-1 group" aria-label="باز کردن منو" onClick={() => onMenuClick(true)}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor" className="transition-all size-7 fill-neutral-gray-10 group-hover:fill-primary">
                   <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
                 </svg>
               </button>
-              <button onClick={onSearchBarClick} className="group order-3" aria-label="جستجو">
-                <SearchNormal1 className="size-7 stroke-neutral-gray-10 group-hover:stroke-primary transition-all" />
+              <button onClick={onSearchBarClick} className="order-3 group" aria-label="جستجو">
+                <SearchNormal1 className="transition-all size-7 stroke-neutral-gray-10 group-hover:stroke-primary" />
               </button>
             </>
           )}

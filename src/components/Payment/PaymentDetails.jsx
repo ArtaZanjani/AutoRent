@@ -89,28 +89,28 @@ const PaymentDetails = () => {
   });
 
   return (
-    <div className="w-full space-y-10 mt-10">
-      <div className="w-full space-y-3 p-6 bg-white shadow-2xl border border-neutral-gray-2 rounded-xl">
+    <div className="w-full mt-10 space-y-10">
+      <div className="w-full p-6 space-y-3 bg-white border shadow-2xl border-neutral-gray-2 rounded-xl">
         <div className="flex flex-col gap-y-4">
-          <p className="text-neutral-gray-11 text-xl sm:text-2xl font-semibold">اطلاعات رزرو</p>
+          <p className="text-xl font-semibold text-neutral-gray-11 sm:text-2xl">اطلاعات رزرو</p>
           <div className="relative w-full overflow-hidden rounded-full">
             <div className="w-full border-2 border-neutral-gray-2"></div>
-            <div className="absolute border-2 border-secondary top-0 right-0 w-10"></div>
+            <div className="absolute top-0 right-0 w-10 border-2 border-secondary"></div>
           </div>
         </div>
         <DataShow />
       </div>
 
-      <div className="w-full space-y-3 pt-6 bg-white shadow-2xl border border-neutral-gray-2 rounded-xl">
-        <div className="flex flex-col gap-y-4 px-4">
-          <p className="text-neutral-gray-11 text-xl sm:text-2xl font-semibold">محاسبه قیمت</p>
+      <div className="w-full pt-6 space-y-3 bg-white border shadow-2xl border-neutral-gray-2 rounded-xl">
+        <div className="flex flex-col px-4 gap-y-4">
+          <p className="text-xl font-semibold text-neutral-gray-11 sm:text-2xl">محاسبه قیمت</p>
           <div className="relative w-full overflow-hidden rounded-full">
             <div className="w-full border-2 border-neutral-gray-2"></div>
-            <div className="absolute border-2 border-secondary top-0 right-0 w-10"></div>
+            <div className="absolute top-0 right-0 w-10 border-2 border-secondary"></div>
           </div>
         </div>
 
-        <div className="w-full flex flex-col">
+        <div className="flex flex-col w-full">
           {priceData.map((e, index) => (
             <div key={index} className={`w-full flex justify-between px-3 items-center h-12 ${index === 0 || index === 2 || index === 4 ? "bg-neutral-gray-10" : ""}`}>
               <p className={`${index === 0 || index === 2 || index === 4 ? "text-white" : "text-neutral-gray-10"}`}>{e.label}</p>
@@ -120,7 +120,7 @@ const PaymentDetails = () => {
         </div>
 
         <div className="w-full p-2">
-          <button onClick={() => orderMutation.mutate()} disabled={orderMutation.isLoading} className="btnBase btn-fill-primary h-12 w-full">
+          <button onClick={() => orderMutation.mutate()} disabled={orderMutation.isLoading} className="w-full h-12 btnBase btn-fill-primary">
             {orderMutation.isLoading ? "در حال ارسال..." : "پرداخت"}
           </button>
         </div>

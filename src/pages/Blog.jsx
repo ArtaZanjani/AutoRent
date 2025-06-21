@@ -81,7 +81,7 @@ const Blog = () => {
     <main className="w-full min-h-screen">
       <Breadcrumbs title="جزئیات محصول" crumbs={[{ path: "/blog", title: "مقالات" }]} />
 
-      <div className="w-full flex-col-reverse xl:flex-row flex items-start gap-6 Padding">
+      <div className="flex flex-col-reverse items-start w-full gap-6 xl:flex-row Padding">
         <div className="flex-1 xl:flex-2">
           {isLoading ? (
             <div className={`w-full flex flex-row ${matches ? "justify-between" : "justify-center"} flex-wrap items-start gap-x-6 gap-y-4`}>
@@ -106,38 +106,38 @@ const Blog = () => {
               )}
             </>
           ) : (
-            <p className="text-center text-gray-400 mt-4">مقاله‌ای یافت نشد.</p>
+            <p className="mt-4 text-center text-gray-400">مقاله‌ای یافت نشد.</p>
           )}
         </div>
 
-        <div className="xl:flex-1 xl:w-fit w-full space-y-6">
+        <div className="w-full space-y-6 xl:flex-1 xl:w-fit">
           <div className="relative w-full">
             <label className={`absolute transition-all pointer-events-none right-2 bg-white px-2 ${focus || value.length > 0 ? "text-sm -top-2.5 translate-y-0 text-neutral-gray-10" : "top-1/2 text-neutral-gray-5 text-base -translate-y-1/2"}`}>جستجو در سایت اجاره خودرو اتورنت</label>
             <input value={value} type="text" className={`w-full text-sm font-medium inpBase !rounded-2xl h-14 bg-white border transition-all ${focus || value.length > 0 ? "border-neutral-gray-10" : "border-neutral-gray-4"}`} onFocus={() => setFocus(true)} onBlur={() => setFocus(false)} onChange={(e) => setValue(e.target.value)} />
-            <div className="absolute top-1/2 -translate-y-1/2 left-0 px-3 pointer-events-none">
+            <div className="absolute left-0 px-3 -translate-y-1/2 pointer-events-none top-1/2">
               <SearchNormal1 className={`size-6 stroke-neutral-gray-5 transition-all ${focus || value.length > 0 ? "stroke-neutral-gray-10" : "stroke-neutral-gray-5"}`} />
             </div>
           </div>
 
           <div className="w-full h-[568px] border border-neutral-gray-4 shadow-2xl rounded-2xl p-4 !pb-16 overflow-hidden">
-            <h1 className="text-neutral-gray-10 font-black text-2xl">آخرین مقالات</h1>
+            <h1 className="text-2xl font-black text-neutral-gray-10">آخرین مقالات</h1>
 
             {isLoading ? (
-              <div className="mt-4 flex flex-col justify-between h-full">
+              <div className="flex flex-col justify-between h-full mt-4">
                 {Array.from({ length: 4 }).map((_, index) => (
                   <div className={`w-full animate-pulse rounded-xl flex items-center p-2 gap-x-3.5 border border-neutral-gray-3`} key={index}>
                     <div className="w-20.5 h-20.5 rounded-lg overflow-hidden bg-neutral-gray-3"></div>
 
-                    <div className="space-y-3 flex-1">
-                      <div className="h-4 bg-neutral-gray-3 rounded w-3/4"></div>
+                    <div className="flex-1 space-y-3">
+                      <div className="w-3/4 h-4 rounded bg-neutral-gray-3"></div>
                       <div className="flex items-center gap-x-4">
                         <div className="flex items-center gap-x-2">
                           <Clock className="size-5 stroke-neutral-gray-6" />
-                          <div className="h-3 bg-neutral-gray-3 rounded w-10"></div>
+                          <div className="w-10 h-3 rounded bg-neutral-gray-3"></div>
                         </div>
                         <div className="flex items-center gap-x-2">
                           <Eye className="size-5 stroke-neutral-gray-6" />
-                          <div className="h-3 bg-neutral-gray-3 rounded w-10"></div>
+                          <div className="w-10 h-3 rounded bg-neutral-gray-3"></div>
                         </div>
                       </div>
                     </div>
@@ -145,7 +145,7 @@ const Blog = () => {
                 ))}
               </div>
             ) : sortedBlogs.length > 0 ? (
-              <div className="mt-4 flex flex-col justify-between h-full">
+              <div className="flex flex-col justify-between h-full mt-4">
                 {sortedBlogs.slice(0, 4).map((blog, index) => (
                   <div key={blog?.id} className={`w-full p-2 ${index !== sortedBlogs.length - 1 && "border-b border-neutral-gray-3"}`}>
                     <Link to={`/blog/${blog?.id}`} className="w-full h-full flex items-center gap-x-3.5">
@@ -153,16 +153,16 @@ const Blog = () => {
                         <BaseImage src={`${import.meta.env.VITE_API_BLOGS_IMAGE}${blog.image}`} alt={blog.title} onError={() => onImageError(blog?.id)} className={`w-full h-full ${errorList.includes(blog?.id) ? "object-contain" : "object-cover"}`} />
                       </div>
 
-                      <div className="space-y-3 flex-1">
-                        <p className="text-neutral-gray-9 font-medium line-clamp-2 text-sm">{blog?.title}</p>
+                      <div className="flex-1 space-y-3">
+                        <p className="text-sm font-medium text-neutral-gray-9 line-clamp-2">{blog?.title}</p>
                         <div className="flex items-center gap-x-4">
                           <div className="flex items-center gap-x-2">
                             <Clock className="size-5 stroke-neutral-gray-6" />
-                            <p className="text-neutral-gray-6 text-sm">{blog?.reading_time}</p>
+                            <p className="text-sm text-neutral-gray-6">{blog?.reading_time}</p>
                           </div>
                           <div className="flex items-center gap-x-2">
                             <Eye className="size-5 stroke-neutral-gray-6" />
-                            <p className="text-neutral-gray-6 text-sm">{blog?.views?.toLocaleString()}</p>
+                            <p className="text-sm text-neutral-gray-6">{blog?.views?.toLocaleString()}</p>
                           </div>
                         </div>
                       </div>
@@ -171,7 +171,7 @@ const Blog = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-center text-gray-400 mt-4">مقاله‌ای یافت نشد.</p>
+              <p className="mt-4 text-center text-gray-400">مقاله‌ای یافت نشد.</p>
             )}
           </div>
         </div>

@@ -25,7 +25,7 @@ const CustomAlertDialog = () => {
               dialogProps.onConfirm?.();
               closeDialog();
             }}
-            className="bg-primary hover:bg-primary-shade-3 text-white"
+            className="text-white bg-primary hover:bg-primary-shade-3"
           >
             {dialogProps.confirmText || "تایید"}
           </AlertDialogAction>

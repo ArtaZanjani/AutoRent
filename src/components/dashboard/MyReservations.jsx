@@ -52,7 +52,7 @@ const MyReservations = ({ data = [], isLoading, error }) => {
   return (
     <>
       <div className="w-full mt-8">
-        <div className="w-full flex flex-row flex-wrap justify-between items-center gap-x-9 gap-y-4">
+        <div className="flex flex-row flex-wrap items-center justify-between w-full gap-x-9 gap-y-4">
           {filterBtn.map((e, index) => (
             <button key={index} className={`flex flex-col justify-center items-center rounded-lg gap-y-1 border border-primary-shade-3 h-20 min-w-66 flex-1 ${e.label === filter ? "bg-primary-shade-3" : ""}`} onClick={() => setFilter(e.label)}>
               <p className={`${e.label === filter ? "text-white" : "text-neutral-gray-8"} font-bold`}>{e.label}</p>
@@ -123,13 +123,13 @@ const MyReservations = ({ data = [], isLoading, error }) => {
               {dataFindById.map((e, index) => (
                 <div key={index} className={`w-full gap-x-3 flex h-12 justify-between items-center p-2 ${index === dataFindById.length - 1 ? "" : "border-b border-neutral-gray-3"} px-3`}>
                   <p className="text-sm">{e.title}</p>
-                  <p className="truncate flex-1 text-left text-sm">{e.value}</p>
+                  <p className="flex-1 text-sm text-left truncate">{e.value}</p>
                 </div>
               ))}
             </div>
 
-            <div className="w-full h-12 mt-3 px-3">
-              <button onClick={() => setIdDataMore(null)} className="btnBase btn-fill-primary w-full h-12">
+            <div className="w-full h-12 px-3 mt-3">
+              <button onClick={() => setIdDataMore(null)} className="w-full h-12 btnBase btn-fill-primary">
                 بستن
               </button>
             </div>

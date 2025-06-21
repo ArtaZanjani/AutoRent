@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import Logo from "@/assets/icons/Logo.webp";
 
-const BaseImage = ({ src, alt, fallback = Logo, className = "w-full h-full object-contain", lazyLoad = true, animationDuration = 0.5, onError, ...rest }) => {
+const BaseImage = ({ src, alt, fallback = Logo, className = "object-contain w-full h-full", lazyLoad = true, animationDuration = 0.5, onError, ...rest }) => {
   const [hasError, setHasError] = useState(false);
   const [isVisible, setIsVisible] = useState(!lazyLoad);
   const imgRef = useRef();

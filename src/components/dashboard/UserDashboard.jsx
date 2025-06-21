@@ -162,7 +162,7 @@ const UserDashboard = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="w-full flex flex-col gap-y-6">
+        <div className="flex flex-col w-full gap-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-[auto_auto] gap-6">
             {inputs.map((e, index) => (
               <React.Fragment key={index}>
@@ -206,7 +206,7 @@ const UserDashboard = () => {
                       className={`w-full font-medium text-neutral-gray-10 text-right px-2 h-17 pt-8 inpBase ${activeIndex === index ? "border-neutral-gray-2" : "border-transparent"}`}
                     />
 
-                    <div className="absolute top-1/2 -translate-y-1/2 left-2 flex gap-x-2" aria-label={activeIndex === index ? "Cancel" : "Edit"}>
+                    <div className="absolute flex -translate-y-1/2 top-1/2 left-2 gap-x-2" aria-label={activeIndex === index ? "Cancel" : "Edit"}>
                       {activeIndex === index ? (
                         <>
                           {e.value.trim() !== "" && (
@@ -229,7 +229,7 @@ const UserDashboard = () => {
                   {e.error.length > 0 && <p className="text-sm font-medium text-error">{e.error}</p>}
                 </div>
 
-                {isSm ? (index + 1) % 2 === 0 && index !== inputs.length - 1 && <hr className="sm:col-span-2 border border-neutral-gray-2" /> : index !== inputs.length - 1 && <hr className="border border-neutral-gray-2" />}
+                {isSm ? (index + 1) % 2 === 0 && index !== inputs.length - 1 && <hr className="border sm:col-span-2 border-neutral-gray-2" /> : index !== inputs.length - 1 && <hr className="border border-neutral-gray-2" />}
               </React.Fragment>
             ))}
           </div>

@@ -43,8 +43,8 @@ const ProductDetail = ({ setAuthOpen }) => {
   ];
 
   const getRow = (label, getValue) => (
-    <div className="grid grid-cols-3 w-full whitespace-nowrap text-sm md:text-base border-b border-b-neutral-gray-2 py-2 items-center last:border-b-0">
-      <div className="text-sm font-semibold text-black col-start-1 row-start-1">{label}</div>
+    <div className="grid items-center w-full grid-cols-3 py-2 text-sm border-b whitespace-nowrap md:text-base border-b-neutral-gray-2 last:border-b-0">
+      <div className="col-start-1 row-start-1 text-sm font-semibold text-black">{label}</div>
       {dataCars?.insuranceOptions?.map((item, index) => (
         <div key={item.type} className={`text-xs font-medium text-black row-start-1 ${index === 0 ? "col-start-3 text-end" : index === 1 ? "col-start-2 text-center" : ""}`}>
           {getValue(item)}
@@ -205,10 +205,10 @@ const ProductDetail = ({ setAuthOpen }) => {
         ]}
       />
 
-      <div className="w-full flex flex-col-reverse xl:flex-row gap-6 items-center xl:items-start Padding">
-        <div className="flex-1 flex flex-col gap-y-5">
-          <div className="w-full min-h-32 bg-white rounded-2xl border border-neutral-gray-2 p-6 pb-3 space-y-3">
-            <div className="w-full flex justify-between items-center">
+      <div className="flex flex-col-reverse items-center w-full gap-6 xl:flex-row xl:items-start Padding">
+        <div className="flex flex-col flex-1 gap-y-5">
+          <div className="w-full p-6 pb-3 space-y-3 bg-white border min-h-32 rounded-2xl border-neutral-gray-2">
+            <div className="flex items-center justify-between w-full">
               <h1 className="text-2xl font-bold text-neutral-gray-10">
                 {dataCars?.brand} {dataCars?.model}
               </h1>
@@ -218,8 +218,8 @@ const ProductDetail = ({ setAuthOpen }) => {
                 ))}
               </div>
             </div>
-            <div className="relative rounded-full overflow-hidden">
-              <div className="w-10 border-2 border-secondary absolute top-1/2 -translate-y-1/2 right-0"></div>
+            <div className="relative overflow-hidden rounded-full">
+              <div className="absolute right-0 w-10 -translate-y-1/2 border-2 border-secondary top-1/2"></div>
               <div className="w-full border-2 border-neutral-gray-2"></div>
             </div>
             <Swiper className="w-full" slidesPerView="auto" spaceBetween="8">
@@ -236,12 +236,12 @@ const ProductDetail = ({ setAuthOpen }) => {
             <BaseImage src={`${import.meta.env.VITE_API_CARS_IMAGE}${dataCars?.Image}`} alt={`${dataCars?.brand} ${dataCars?.model}`} />
           </div>
 
-          <div className="w-full min-h-32 bg-white rounded-2xl border border-neutral-gray-2 p-6 pb-3 space-y-3">
-            <div className="w-full flex justify-between items-center">
+          <div className="w-full p-6 pb-3 space-y-3 bg-white border min-h-32 rounded-2xl border-neutral-gray-2">
+            <div className="flex items-center justify-between w-full">
               <h2 className="text-2xl font-bold text-neutral-gray-10">پوشش‌ها</h2>
             </div>
-            <div className="relative rounded-full overflow-hidden">
-              <div className="w-10 border-2 border-secondary absolute top-1/2 -translate-y-1/2 right-0"></div>
+            <div className="relative overflow-hidden rounded-full">
+              <div className="absolute right-0 w-10 -translate-y-1/2 border-2 border-secondary top-1/2"></div>
               <div className="w-full border-2 border-neutral-gray-2"></div>
             </div>
             <div className="w-full relative min-h-[calc(40px_*_6)] overflow-y-hidden md:min-h-fit overflow-x-auto">
@@ -256,18 +256,18 @@ const ProductDetail = ({ setAuthOpen }) => {
             </div>
           </div>
 
-          <div className="w-full min-h-32 bg-white rounded-2xl border border-neutral-gray-2 p-6 pb-3 space-y-3">
-            <div className="w-full flex justify-between items-center">
+          <div className="w-full p-6 pb-3 space-y-3 bg-white border min-h-32 rounded-2xl border-neutral-gray-2">
+            <div className="flex items-center justify-between w-full">
               <h3 className="text-2xl font-bold text-neutral-gray-10">مشخصات</h3>
             </div>
-            <div className="relative rounded-full overflow-hidden">
-              <div className="w-10 border-2 border-secondary absolute top-1/2 -translate-y-1/2 right-0"></div>
+            <div className="relative overflow-hidden rounded-full">
+              <div className="absolute right-0 w-10 -translate-y-1/2 border-2 border-secondary top-1/2"></div>
               <div className="w-full border-2 border-neutral-gray-2"></div>
             </div>
-            <div className="w-full flex flex-col sm:flex-row justify-start sm:items-center gap-5 flex-wrap">
+            <div className="flex flex-col flex-wrap justify-start w-full gap-5 sm:flex-row sm:items-center">
               {specifications.map((e, index) => (
                 <div className="flex min-h-10 items-center gap-x-2.5" key={index}>
-                  <div className="w-8 h-8 rounded-md border border-neutral-gray-2 flex justify-center items-center">{e.icon}</div>
+                  <div className="flex items-center justify-center w-8 h-8 border rounded-md border-neutral-gray-2">{e.icon}</div>
                   <div className="space-y-1">
                     <p className="text-xs font-medium text-neutral-gray-10">{e.label}</p>
                     <p className="text-xs font-medium text-neutral-gray-7">{e.value}</p>
@@ -277,18 +277,18 @@ const ProductDetail = ({ setAuthOpen }) => {
             </div>
           </div>
 
-          <div className="w-full min-h-32 bg-white rounded-2xl border border-neutral-gray-2 p-6 pb-3 space-y-3">
-            <div className="w-full flex justify-between items-center">
+          <div className="w-full p-6 pb-3 space-y-3 bg-white border min-h-32 rounded-2xl border-neutral-gray-2">
+            <div className="flex items-center justify-between w-full">
               <h4 className="text-2xl font-bold text-neutral-gray-10">امکانات</h4>
             </div>
-            <div className="relative rounded-full overflow-hidden">
-              <div className="w-10 border-2 border-secondary absolute top-1/2 -translate-y-1/2 right-0"></div>
+            <div className="relative overflow-hidden rounded-full">
+              <div className="absolute right-0 w-10 -translate-y-1/2 border-2 border-secondary top-1/2"></div>
               <div className="w-full border-2 border-neutral-gray-2"></div>
             </div>
-            <div className="w-full flex flex-col sm:flex-row justify-start sm:items-center gap-5 flex-wrap">
+            <div className="flex flex-col flex-wrap justify-start w-full gap-5 sm:flex-row sm:items-center">
               {dataCars?.features?.map((e, index) => (
                 <div className="flex items-center gap-x-2.5" key={index}>
-                  <div className="w-8 h-8 rounded-md border border-neutral-gray-2 flex justify-center items-center">
+                  <div className="flex items-center justify-center w-8 h-8 border rounded-md border-neutral-gray-2">
                     <ArrowSwapVertical className="size-6 stroke-neutral-gray-8" />
                   </div>
                   <p>{e}</p>
@@ -297,12 +297,12 @@ const ProductDetail = ({ setAuthOpen }) => {
             </div>
           </div>
 
-          <div className="w-full min-h-32 bg-white rounded-2xl border border-neutral-gray-2 p-6 pb-3 space-y-3">
-            <div className="w-full flex justify-between items-center">
+          <div className="w-full p-6 pb-3 space-y-3 bg-white border min-h-32 rounded-2xl border-neutral-gray-2">
+            <div className="flex items-center justify-between w-full">
               <h5 className="text-2xl font-bold text-neutral-gray-10">درباره خودرو</h5>
             </div>
-            <div className="relative rounded-full overflow-hidden">
-              <div className="w-10 border-2 border-secondary absolute top-1/2 -translate-y-1/2 right-0"></div>
+            <div className="relative overflow-hidden rounded-full">
+              <div className="absolute right-0 w-10 -translate-y-1/2 border-2 border-secondary top-1/2"></div>
               <div className="w-full border-2 border-neutral-gray-2"></div>
             </div>
             <strong className="text-neutral-gray-11">
@@ -311,21 +311,21 @@ const ProductDetail = ({ setAuthOpen }) => {
             <p className="text-sm text-neutral-gray-11 leading-relaxed mt-2.5">{dataCars?.about}</p>
           </div>
 
-          <div className="w-full min-h-32 bg-white rounded-2xl border border-neutral-gray-2 p-6 pb-3 space-y-3">
-            <div className="w-full flex justify-between items-center">
+          <div className="w-full p-6 pb-3 space-y-3 bg-white border min-h-32 rounded-2xl border-neutral-gray-2">
+            <div className="flex items-center justify-between w-full">
               <h6 className="text-2xl font-bold text-neutral-gray-10">نظرات</h6>
             </div>
-            <div className="relative rounded-full overflow-hidden">
-              <div className="w-10 border-2 border-secondary absolute top-1/2 -translate-y-1/2 right-0"></div>
+            <div className="relative overflow-hidden rounded-full">
+              <div className="absolute right-0 w-10 -translate-y-1/2 border-2 border-secondary top-1/2"></div>
               <div className="w-full border-2 border-neutral-gray-2"></div>
             </div>
             {commentsCars?.length > 0 ? (
               commentsCars?.map((e, index) => (
-                <div className="w-full flex flex-col gap-y-4 border border-neutral-gray-2 rounded-xl p-3" key={index}>
-                  <div className="w-full flex justify-between items-center">
+                <div className="flex flex-col w-full p-3 border gap-y-4 border-neutral-gray-2 rounded-xl" key={index}>
+                  <div className="flex items-center justify-between w-full">
                     <div className="flex items-center gap-x-3">
-                      <div className="w-10 h-10 rounded-xl overflow-hidden border border-neutral-gray-2">
-                        <BaseImage src={`${import.meta.env.VITE_API_PROFILE_IMAGE}${e?.user?.avatar_url}`} alt={`${e?.user?.fName} ${e?.user?.lName}`} className="w-full h-full object-contain" />
+                      <div className="w-10 h-10 overflow-hidden border rounded-xl border-neutral-gray-2">
+                        <BaseImage src={`${import.meta.env.VITE_API_PROFILE_IMAGE}${e?.user?.avatar_url}`} alt={`${e?.user?.fName} ${e?.user?.lName}`} className="object-contain w-full h-full" />
                       </div>
                       <p className="w-fit">تاریخ: {new Date(e.publish_date).toLocaleDateString("fa-IR")}</p>
                     </div>
@@ -334,7 +334,7 @@ const ProductDetail = ({ setAuthOpen }) => {
                       <Star1 color="#F4B740" size="20" variant="Bold" />
                     </div>
                   </div>
-                  <p className="text-sm leading-relaxed font-medium">{e?.comment}</p>
+                  <p className="text-sm font-medium leading-relaxed">{e?.comment}</p>
                 </div>
               ))
             ) : (
@@ -343,24 +343,24 @@ const ProductDetail = ({ setAuthOpen }) => {
           </div>
         </div>
 
-        <div className="w-full xl:w-fit xl:flex-1 min-h-20 rounded-2xl flex flex-col gap-y-6 items-center p-6 bg-white border border-neutral-gray-2">
+        <div className="flex flex-col items-center w-full p-6 bg-white border xl:w-fit xl:flex-1 min-h-20 rounded-2xl gap-y-6 border-neutral-gray-2">
           <div className="flex flex-col sm:flex-row w-full items-center gap-2.5">
             {priceDetails.map((e, index) => (
-              <div className="w-full sm:w-fit flex-1 h-12 bg-neutral-gray-1 rounded-lg flex justify-between items-center p-2" key={index}>
+              <div className="flex items-center justify-between flex-1 w-full h-12 p-2 rounded-lg sm:w-fit bg-neutral-gray-1" key={index}>
                 <p className="text-neutral-gray-8">{e.title}</p>
-                <p className="text-primary font-semibold">{e.value}</p>
+                <p className="font-semibold text-primary">{e.value}</p>
               </div>
             ))}
           </div>
 
           {inputs.map((e, index) => (
             <div key={index} onClick={(e) => e.stopPropagation()} className="relative w-full">
-              <div className="absolute z-10 top-1/2 -translate-y-1/2 right-2">{e.icon}</div>
+              <div className="absolute z-10 -translate-y-1/2 top-1/2 right-2">{e.icon}</div>
               <label htmlFor={index} className={`pointer-events-none bg-white transition-all absolute px-2 ${index === focus || (index === 1 ? formatDateForDisplay(e.value) : e.value).length > 0 ? "-top-3 text-sm right-2 text-neutral-gray-10" : "top-1/2 -translate-y-1/2 right-7 text-neutral-gray-4"}`}>
                 {e.Label}
               </label>
               <input ref={(el) => (inputRef.current[index] = el)} id={index} className={`h-12 inpBase w-full !pr-9 border transition-all ${index === focus || (index === 1 ? formatDateForDisplay(e.value) : e.value).length > 0 ? "border-neutral-gray-10" : "border-neutral-gray-4"}`} value={focus === index ? e.filterValue : index === 1 ? formatDateForDisplay(e.value) : e.value} onFocus={() => setFocus(index)} onChange={(ev) => (matches ? handleFilterChange(index, ev.target.value) : null)} readOnly={index === 1 ? true : !matches} aria-label={e.Label} />
-              <div onClick={() => setFocus(focus === index ? null : index)} className="absolute top-1/2 -translate-y-1/2 left-0 px-2 cursor-pointer h-full flex justify-center items-center rounded-l-lg">
+              <div onClick={() => setFocus(focus === index ? null : index)} className="absolute left-0 flex items-center justify-center h-full px-2 -translate-y-1/2 rounded-l-lg cursor-pointer top-1/2">
                 <ArrowDown2 className={`size-6 stroke-neutral-gray-4 customTransition ${focus === index ? "rotate-180" : "rotate-0"}`} />
               </div>
               {index === 1 ? (
@@ -370,11 +370,11 @@ const ProductDetail = ({ setAuthOpen }) => {
                   {focus === index && (
                     <motion.div className="w-full h-screen sm:h-fit z-[999] bg-white border border-neutral-gray-4 fixed top-0 sm:absolute sm:top-14 sm:rounded-xl overflow-y-auto left-0 sm:z-20" initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 50, opacity: 0 }} transition={{ duration: 0.255, ease: [0.4, 0, 0.2, 1] }}>
                       {!matches && (
-                        <div className="sticky top-0 left-0 py-5 px-3 bg-white border-b border-neutral-gray-4 w-full flex flex-col">
-                          <div className="w-full flex justify-between items-center">
+                        <div className="sticky top-0 left-0 flex flex-col w-full px-3 py-5 bg-white border-b border-neutral-gray-4">
+                          <div className="flex items-center justify-between w-full">
                             {e.Label}
                             <div onClick={() => setFocus(null)} className="p-2 rounded-full hover:bg-neutral-gray-3">
-                              <Add className="size-7 stroke-black rotate-45" />
+                              <Add className="rotate-45 size-7 stroke-black" />
                             </div>
                           </div>
                           {index !== 1 && index !== 3 && <input type="text" placeholder="جستجو" className={`h-12 w-full border rounded-xl px-3 text-sm transition-colors border-neutral-gray-3 focus:border-primary`} value={e.filterValue} onChange={(ev) => handleFilterChange(index, ev.target.value)} />}
@@ -454,7 +454,7 @@ const ProductDetail = ({ setAuthOpen }) => {
             </div>
           ))}
 
-          <div className="w-full flex justify-between items-center">
+          <div className="flex items-center justify-between w-full">
             <p className="text-sm text-neutral-gray-10">نوع بیمه:</p>
             <div className="flex items-center gap-x-6">
               {["بیمه پایه", "بیمه کامل"].map((e, index) => (
@@ -468,7 +468,7 @@ const ProductDetail = ({ setAuthOpen }) => {
 
           <div className={`w-full bg-neutral-gray-1 rounded-lg flex justify-between items-center px-2 customTransition overflow-hidden ${checkValue && focus === null ? "py-2" : ""}`} style={{ maxHeight: checkValue && focus === null ? "48px" : "0" }}>
             <p className="text-neutral-gray-8">{calculateDays()} روز:</p>
-            <p className="text-primary font-semibold">{calculateTotalPrice().toLocaleString()}</p>
+            <p className="font-semibold text-primary">{calculateTotalPrice().toLocaleString()}</p>
           </div>
 
           <button onClick={() => (checkValue && focus === null ? handlePayment() : null)} className={`btnBase w-full h-12 ${checkValue && focus === null ? "btn-fill-primary" : "btn-fill-disabled"}`} disabled={!(checkValue && focus === null)}>

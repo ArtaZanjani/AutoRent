@@ -65,7 +65,7 @@ const Payment = () => {
       />
 
       <div className="w-full Padding">
-        <div className="w-full flex flex-col md:flex-row items-center gap-3">
+        <div className="flex flex-col items-center w-full gap-3 md:flex-row">
           {allStep.map((e, index) => {
             const Icon = e.icon;
             return (
@@ -73,8 +73,8 @@ const Payment = () => {
                 <div className="flex flex-col items-center gap-y-2">
                   <div className={`w-13 h-13 rounded-full flex justify-center items-center p-1 ${stepNumber > index ? "bg-primary" : stepNumber === index ? "bg-secondary" : "bg-neutral-gray-1 border border-neutral-gray-4"}`}>
                     {stepNumber > index ? (
-                      <div className="w-full h-full bg-primary border-2 border-white rounded-full flex justify-center items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check2 fill-white size-7 translate-y-px" viewBox="0 0 16 16">
+                      <div className="flex items-center justify-center w-full h-full border-2 border-white rounded-full bg-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="translate-y-px bi bi-check2 fill-white size-7" viewBox="0 0 16 16">
                           <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0" />
                         </svg>
                       </div>

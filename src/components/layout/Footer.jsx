@@ -50,7 +50,7 @@ const Footer = () => {
       <section className={`w-full flex ${matches ? "flex-row" : "flex-col"} gap-y-5 justify-between items-start flex-wrap`}>
         <article className="space-y-6 max-w-[407px]">
           <BaseImage src={Logo2} fallback={Logo2} alt="Autornet Logo" className="object-contain w-auto h-[59px]" />
-          <p className="text-sm text-white leading-relaxed">اتورنت با رویکرد اعتماد به مشتری، با در اختیار داشتن بزرگترین ناوگان خودرویی متشکل از انواع خودروهای صفر کیلومتر، اقتصادی تا تجاری در سراسر کشور ایران آماده خدمت‌رسانی به مشتریان است.</p>
+          <p className="text-sm leading-relaxed text-white">اتورنت با رویکرد اعتماد به مشتری، با در اختیار داشتن بزرگترین ناوگان خودرویی متشکل از انواع خودروهای صفر کیلومتر، اقتصادی تا تجاری در سراسر کشور ایران آماده خدمت‌رسانی به مشتریان است.</p>
         </article>
 
         {matches
@@ -68,7 +68,7 @@ const Footer = () => {
               const isOpen = openIndex === index;
               return (
                 <section key={index} className="w-full border border-white rounded-xl">
-                  <button onClick={() => toggleAccordion(index)} aria-expanded={isOpen} aria-controls={`footer-section-${index}`} className="w-full flex justify-between items-center text-white font-semibold px-3 py-3" type="button">
+                  <button onClick={() => toggleAccordion(index)} aria-expanded={isOpen} aria-controls={`footer-section-${index}`} className="flex items-center justify-between w-full px-3 py-3 font-semibold text-white" type="button">
                     {title}
                     <ArrowDown2 className={`size-6 stroke-white transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} aria-hidden="true" />
                   </button>
@@ -85,7 +85,7 @@ const Footer = () => {
                     className={`overflow-hidden customTransition`}
                     aria-hidden={!isOpen}
                   >
-                    <ul className="space-y-3 pb-3">
+                    <ul className="pb-3 space-y-3">
                       {items.map((item, i) => (
                         <li key={i}>{renderLink(title, item)}</li>
                       ))}
@@ -96,11 +96,11 @@ const Footer = () => {
             })}
       </section>
 
-      <hr className="w-full border border-neutral-gray-4 mt-5" />
+      <hr className="w-full mt-5 border border-neutral-gray-4" />
 
       <address className="flex items-center gap-x-2" aria-label="حقوق وبسایت">
         <CreativeCommons className="size-6 stroke-white" />
-        <p className="text-white text-sm font-semibold not-italic">تمامی حقوق این وبسایت متعلق به اتورنت می‌باشد</p>
+        <p className="text-sm not-italic font-semibold text-white">تمامی حقوق این وبسایت متعلق به اتورنت می‌باشد</p>
       </address>
     </footer>
   );

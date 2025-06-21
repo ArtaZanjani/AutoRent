@@ -89,7 +89,7 @@ const CarReservationHome = () => {
 
   return (
     <BaseSection title="رزرو خودرو در" highlight={import.meta.env.VITE_APP_NAME} description="مشاهده خودروهای اجاره‌ای موجود برای رزرو آنلاین در سراسر ایران">
-      <div className="w-full flex flex-col justify-start items-center gap-y-6 -translate-y-16">
+      <div className="flex flex-col items-center justify-start w-full -translate-y-16 gap-y-6">
         <div ref={stickyRef} className={`w-full flex flex-col md:flex-row items-center gap-y-7 gap-x-2 sticky top-16 pt-20 md:pt-28 pb-5 left-0 z-20 transition-colors duration-300 border border-t-0 ${isSticky ? "bg-white shadow-sm rounded-b-2xl border-neutral-gray-2" : "bg-transparent shadow-none border-transparent rounded-b-none"}`}>
           <div className={`transition-all duration-300 ${isSticky ? "flex-none" : "lg:flex-1"}`} />
 
@@ -125,7 +125,7 @@ const CarReservationHome = () => {
           <h3 id="car-list-heading" className="sr-only">
             لیست خودروهای فیلتر شده برای اجاره
           </h3>
-          <div className="w-full flex flex-row justify-center lg:justify-between items-center flex-wrap gap-5">{isLoading ? Array.from({ length: 4 }).map((_, index) => <CardSkeleton key={index} />) : filteredData?.map((e, index) => <Card key={index} car={e} />)}</div>
+          <div className="flex flex-row flex-wrap items-center justify-center w-full gap-5 lg:justify-between">{isLoading ? Array.from({ length: 4 }).map((_, index) => <CardSkeleton key={index} />) : filteredData?.map((e, index) => <Card key={index} car={e} />)}</div>
         </section>
       </div>
     </BaseSection>

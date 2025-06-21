@@ -7,9 +7,9 @@ import React from "react";
 const Breadcrumbs = ({ title = "", crumbs = [] }) => {
   return (
     <div className="text-sm h-[400px] relative flex justify-center items-center mb-14">
-      <BaseImage src={Page_Screen} alt="Page_Screen" className="w-full h-full object-cover absolute top-0 left-0 z-0 pointer-events-none" />
+      <BaseImage src={Page_Screen} alt="Page_Screen" className="absolute top-0 left-0 z-0 object-cover w-full h-full pointer-events-none" />
 
-      <div className="relative z-10 flex flex-col items-center gap-y-3 text-white">
+      <div className="relative z-10 flex flex-col items-center text-white gap-y-3">
         <h1 className="text-secondary text-center line-clamp-2 text-2xl px-1 sm:text-[32px] font-bold">{title}</h1>
 
         <div className="flex flex-wrap items-center gap-x-1">

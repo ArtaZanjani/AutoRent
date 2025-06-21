@@ -172,7 +172,7 @@
   }
 
   * {
-    @apply outline-0 select-none font-Estedad_FD text-base font-normal scroll-smooth antialiased;
+    @apply text-base antialiased font-normal select-none outline-0 font-Estedad_FD scroll-smooth;
   }
 
   *::-webkit-scrollbar {
@@ -197,7 +197,7 @@
   }
 
   body {
-    @apply w-full min-h-screen bg-white overflow-x-hidden;
+    @apply w-full min-h-screen overflow-x-hidden bg-white;
   }
 
   #root {
@@ -231,13 +231,13 @@
     @apply text-black bg-secondary hover:bg-secondary-shade-1;
   }
   .btn-border-primary {
-    @apply text-primary border border-primary hover:border-primary-shade-3;
+    @apply border text-primary border-primary hover:border-primary-shade-3;
   }
   .btn-none-primary {
     @apply text-primary hover:text-primary-shade-3 disabled:text-neutral-gray-3;
   }
   .btn-fill-disabled {
-    @apply bg-neutral-gray-1 text-neutral-gray-3 cursor-not-allowed hover:bg-neutral-gray-1;
+    @apply cursor-not-allowed bg-neutral-gray-1 text-neutral-gray-3 hover:bg-neutral-gray-1;
   }
   .btn-border-disabled {
     @apply border border-neutral-gray-4 text-neutral-gray-3;
@@ -254,7 +254,7 @@
   }
 
   .btnBase {
-    @apply flex flex-row justify-center items-center gap-x-2 px-4 py-1 rounded-lg;
+    @apply flex flex-row items-center justify-center px-4 py-1 rounded-lg gap-x-2;
   }
 
   .inpBase {

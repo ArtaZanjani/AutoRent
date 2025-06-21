@@ -85,8 +85,8 @@ const PersianDatePicker = ({ label, value, onChange, isRange = false, onClose, i
     };
 
     return (
-      <div className="text-center px-1">
-        <div className="flex justify-between items-center p-2">
+      <div className="px-1 text-center">
+        <div className="flex items-center justify-between p-2">
           {matches &&
             (isPrimary ? (
               <button onClick={isPastMonth ? null : () => goToMonth(-1)} className={classNames("p-2 rounded-xl xl:rounded-full", isPastMonth ? "opacity-30 cursor-not-allowed" : "hover:bg-neutral-gray-3")} disabled={isPastMonth}>
@@ -96,7 +96,7 @@ const PersianDatePicker = ({ label, value, onChange, isRange = false, onClose, i
               !isPrimary && <div className="w-9" />
             ))}
 
-          <span className="font-semibold text-lg flex-grow">
+          <span className="flex-grow text-lg font-semibold">
             {jalaliMoment().jMonth(month).format("jMMMM")} {year}
           </span>
 
@@ -110,7 +110,7 @@ const PersianDatePicker = ({ label, value, onChange, isRange = false, onClose, i
             ))}
         </div>
 
-        <div className="grid grid-cols-7 gap-y-1 text-sm font-medium text-neutral-gray-6">
+        <div className="grid grid-cols-7 text-sm font-medium gap-y-1 text-neutral-gray-6">
           {["ش", "ی", "د", "س", "چ", "پ", "ج"].map((day, i) => (
             <div key={i} className="py-2 text-center">
               {day}
@@ -148,7 +148,7 @@ const PersianDatePicker = ({ label, value, onChange, isRange = false, onClose, i
             {label}
           </label>
           <input id="1" type="text" readOnly value={displayValue} className={`h-14 w-full border rounded-xl px-3 pt-5 text-sm transition-colors ${isOpen || displayValue ? "border-primary" : "border-neutral-gray-3"}`} />
-          <div className="absolute left-0 top-1/2 -translate-y-1/2 px-2 cursor-pointer" onClick={(e) => e.stopPropagation()}>
+          <div className="absolute left-0 px-2 -translate-y-1/2 cursor-pointer top-1/2" onClick={(e) => e.stopPropagation()}>
             <ArrowDown2 className={`size-6 transition-transform ${isOpen ? "stroke-primary rotate-180" : "stroke-black"}`} />
           </div>
         </>
@@ -159,15 +159,15 @@ const PersianDatePicker = ({ label, value, onChange, isRange = false, onClose, i
           <motion.div className={`bg-white fixed w-screen h-screen left-0 z-[999] overflow-y-auto xl:h-fit xl:absolute xl:z-30 border border-neutral-gray-4 xl:w-[600px] xl:rounded-xl shadow-lg pb-4 ${location.pathname === "/" ? "top-0 xl:mt-2 xl:left-1/2 xl:-translate-x-1/2" : "top-0 xl:-top-15"}`} initial={{ y: 100, opacity: 0 }} animate={{ y: matches ? 70 : 0, opacity: 1 }} exit={{ y: 100, opacity: 0 }} transition={{ duration: 0.255, ease: [0.4, 0, 0.2, 1] }} onClick={(e) => e.stopPropagation()}>
             <div className={classNames("flex flex-col", isRange && "xl:flex-row gap-x-4")}>
               {!matches && (
-                <div className="w-full bg-white z-20 border-b border-neutral-gray-4 sticky top-0 left-0 py-5 px-3 flex flex-col items-center">
-                  <div className="w-full flex justify-between items-center">
+                <div className="sticky top-0 left-0 z-20 flex flex-col items-center w-full px-3 py-5 bg-white border-b border-neutral-gray-4">
+                  <div className="flex items-center justify-between w-full">
                     {label}
                     <div onClick={onClose} className="p-2 rounded-full hover:bg-neutral-gray-3">
-                      <Add className="size-7 stroke-black rotate-45" />
+                      <Add className="rotate-45 size-7 stroke-black" />
                     </div>
                   </div>
 
-                  <div className="flex justify-between items-center w-full mt-5">
+                  <div className="flex items-center justify-between w-full mt-5">
                     <button onClick={isPastMonth ? null : () => goToMonth(-1)} className={classNames("p-2 rounded-xl xl:rounded-full", isPastMonth ? "opacity-30 cursor-not-allowed" : "hover:bg-neutral-gray-3")} disabled={isPastMonth}>
                       <ArrowDown2 className="-rotate-90 size-6 stroke-black" />
                     </button>
@@ -182,7 +182,7 @@ const PersianDatePicker = ({ label, value, onChange, isRange = false, onClose, i
               {isRange && <div className="max-w-0.5 w-0.5 bg-neutral-gray-4" />}
               {isRange && renderMonth(nextYear, nextMonth, false)}
             </div>
-            <div className="flex justify-end gap-x-2 mt-4 px-4 mb-24 xl:mb-0">
+            <div className="flex justify-end px-4 mt-4 mb-24 gap-x-2 xl:mb-0">
               <button
                 onClick={() => {
                   setSelectedDates(isRange ? [] : null);
@@ -190,11 +190,11 @@ const PersianDatePicker = ({ label, value, onChange, isRange = false, onClose, i
                   setCurrentDate({ year: today.current.jYear(), month: today.current.jMonth() });
                   onClose();
                 }}
-                className="btn-outline-primary px-4 py-2 rounded-xl xl:rounded-full"
+                className="px-4 py-2 btn-outline-primary rounded-xl xl:rounded-full"
               >
                 پاک کردن
               </button>
-              <button onClick={onClose} className="btnBase btn-fill-primary px-4 py-2 rounded-xl xl:rounded-full">
+              <button onClick={onClose} className="px-4 py-2 btnBase btn-fill-primary rounded-xl xl:rounded-full">
                 تایید
               </button>
             </div>

@@ -137,18 +137,18 @@ const ProductList = () => {
     {
       title: "قیمت اجاره خودرو",
       content: (
-        <div className="space-y-3 w-full">
+        <div className="w-full space-y-3">
           <div className="flex justify-between">
             {filters.price.map((price, index) => (
               <p key={index}>{price.toLocaleString()}</p>
             ))}
           </div>
-          <Slider.Root dir="rtl" className="relative flex w-full touch-none select-none items-center" min={1000000} max={60000000} step={1000000} value={filters.price} onValueChange={handleSliderChange}>
-            <Slider.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-neutral-200">
+          <Slider.Root dir="rtl" className="relative flex items-center w-full select-none touch-none" min={1000000} max={60000000} step={1000000} value={filters.price} onValueChange={handleSliderChange}>
+            <Slider.Track className="relative w-full h-2 overflow-hidden rounded-full grow bg-neutral-200">
               <Slider.Range className="absolute h-full bg-primary" />
             </Slider.Track>
-            <Slider.Thumb className="block h-5 w-5 rounded-full bg-white border border-neutral-gray-4" aria-label="Minimum value" />
-            <Slider.Thumb className="block h-5 w-5 rounded-full bg-white border border-neutral-gray-4" aria-label="Maximum value" />
+            <Slider.Thumb className="block w-5 h-5 bg-white border rounded-full border-neutral-gray-4" aria-label="Minimum value" />
+            <Slider.Thumb className="block w-5 h-5 bg-white border rounded-full border-neutral-gray-4" aria-label="Maximum value" />
           </Slider.Root>
         </div>
       ),
@@ -156,7 +156,7 @@ const ProductList = () => {
     {
       title: "برند خودرو",
       content: carBrands.map((brand, index) => (
-        <div key={index} onClick={() => handleCheckBoxChange(index)} className="flex items-center gap-x-3 cursor-pointer">
+        <div key={index} onClick={() => handleCheckBoxChange(index)} className="flex items-center cursor-pointer gap-x-3">
           <CheckBox active={filters.activeCheckBox.includes(index)} />
           <p>{brand}</p>
         </div>
@@ -165,7 +165,7 @@ const ProductList = () => {
     {
       title: "مقصد مورد نظر",
       content: capitalAirports.map((option, index) => (
-        <div key={index} onClick={() => handleRadioChange(index)} className="flex items-center gap-x-3 cursor-pointer">
+        <div key={index} onClick={() => handleRadioChange(index)} className="flex items-center cursor-pointer gap-x-3">
           <RadioBtn active={filters.activeRadio === index} />
           <p>{option.city}</p>
         </div>
@@ -178,12 +178,12 @@ const ProductList = () => {
   return (
     <main className="w-full">
       <Breadcrumbs title="لیست خودرو" crumbs={[{ path: null, title: "لیست خودرو" }]} />
-      <div className="flex justify-between items-start gap-x-6 px-4">
+      <div className="flex items-start justify-between px-4 gap-x-6">
         <div onClick={() => setIsFilterOpen(false)} ref={sidebarRef} className={`${isDesktop ? "sticky top-0" : `fixed z-[999] bg-black/50 top-0 left-0 w-screen h-screen transition-all ${isFilterOpen ? "opacity-100 pointer-events-auto translate-x-0" : "opacity-0 pointer-events-none translate-x-56"}`}`}>
           <div onClick={(e) => e.stopPropagation()} className={`w-72 overflow-y-auto border border-neutral-gray-2 px-4 py-6 flex flex-col items-center space-y-4 bg-white transition-all ${isDesktop ? "min-h-[680px] rounded-2xl" : "h-full rounded-l-2xl"} ${isDesktop && isSticky && "pt-28"}`}>
             {filterSidebar.map((item, index) => (
               <div className="w-full" key={index}>
-                <button onClick={() => setActiveAccordion(activeAccordion === index ? null : index)} className="w-full flex justify-between items-center">
+                <button onClick={() => setActiveAccordion(activeAccordion === index ? null : index)} className="flex items-center justify-between w-full">
                   <p>{item.title}</p>
                   <ArrowDown2 className={`size-6 stroke-neutral-gray-6 transition-transform ${activeAccordion === index ? "rotate-180" : "rotate-0"}`} />
                 </button>
@@ -203,10 +203,10 @@ const ProductList = () => {
 
         <div className="flex-1 min-h-[300px]">
           {cars.length ? (
-            <div className="flex flex-col items-center gap-y-6 w-full">
+            <div className="flex flex-col items-center w-full gap-y-6">
               <div className={`grid ${isDesktop ? "grid-cols-[1fr_auto]" : "grid-cols-1 xs:grid-cols-[auto_1fr]"} gap-6 w-full`}>
                 {!isDesktop && (
-                  <button className="btn-fill-primary w-12 h-12 p-3 rounded-xl flex justify-center items-center" onClick={() => setIsFilterOpen(true)}>
+                  <button className="flex items-center justify-center w-12 h-12 p-3 btn-fill-primary rounded-xl" onClick={() => setIsFilterOpen(true)}>
                     <Filter className="size-8 stroke-white" />
                   </button>
                 )}
@@ -214,14 +214,14 @@ const ProductList = () => {
                   <label htmlFor="sort" className={`absolute bg-white transition-all px-2 ${isSortOpen || sortValue ? "-top-3 text-sm right-2" : "top-1/2 -translate-y-1/2 right-1"}`}>
                     مرتب سازی
                   </label>
-                  <input id="sort" value={isSortOpen ? filterSortInput : sortValue} type="text" className="p-3 h-12 border border-neutral-gray-5 rounded-xl w-full" onFocus={() => setIsSortOpen(true)} onChange={(e) => setFilterSortInput(e.target.value)} />
-                  <span className="absolute top-0 left-0 h-full px-3 cursor-pointer flex justify-center items-center rounded-l-xl" onClick={() => setIsSortOpen((prev) => !prev)}>
+                  <input id="sort" value={isSortOpen ? filterSortInput : sortValue} type="text" className="w-full h-12 p-3 border border-neutral-gray-5 rounded-xl" onFocus={() => setIsSortOpen(true)} onChange={(e) => setFilterSortInput(e.target.value)} />
+                  <span className="absolute top-0 left-0 flex items-center justify-center h-full px-3 cursor-pointer rounded-l-xl" onClick={() => setIsSortOpen((prev) => !prev)}>
                     <ArrowDown2 className={`size-6 stroke-neutral-gray-5 transition-transform ${isSortOpen ? "rotate-180" : "rotate-0"}`} />
                   </span>
                   <AnimatePresence>
                     {isSortOpen && (
-                      <motion.div className="sort-dropdown w-full absolute left-0 top-14 overflow-hidden rounded-xl z-30 bg-white border border-neutral-gray-5 shadow-2xl" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 50 }} transition={{ duration: 0.225, ease: [0.4, 0, 0.2, 1] }}>
-                        <div className="flex flex-col items-center w-full max-h-72 overflow-y-auto">
+                      <motion.div className="absolute left-0 z-30 w-full overflow-hidden bg-white border shadow-2xl sort-dropdown top-14 rounded-xl border-neutral-gray-5" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 50 }} transition={{ duration: 0.225, ease: [0.4, 0, 0.2, 1] }}>
+                        <div className="flex flex-col items-center w-full overflow-y-auto max-h-72">
                           {sortOptions.filter((option) => option.includes(filterSortInput)).length > 0 ? (
                             sortOptions
                               .filter((option) => option.includes(filterSortInput))
@@ -238,7 +238,7 @@ const ProductList = () => {
                                 </button>
                               ))
                           ) : (
-                            <div className="py-4 text-neutral-gray-6 text-sm w-full px-3">نتیجه‌ای یافت نشد</div>
+                            <div className="w-full px-3 py-4 text-sm text-neutral-gray-6">نتیجه‌ای یافت نشد</div>
                           )}
                         </div>
                       </motion.div>
@@ -258,7 +258,7 @@ const ProductList = () => {
 
               {hasMore && !isLoading && (
                 <div className="flex justify-center mt-8">
-                  <button onClick={() => setPage((prev) => prev + 1)} className="btnBase btn-fill-primary h-11 px-4">
+                  <button onClick={() => setPage((prev) => prev + 1)} className="px-4 btnBase btn-fill-primary h-11">
                     مشاهده بیشتر
                   </button>
                 </div>
@@ -273,7 +273,7 @@ const ProductList = () => {
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-10">
+                <div className="py-10 text-center">
                   <p>ماشینی با فیلترهای انتخابی یافت نشد</p>
                   <button
                     onClick={() =>
@@ -283,7 +283,7 @@ const ProductList = () => {
                         price: [1000000, 60000000],
                       })
                     }
-                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+                    className="px-4 py-2 mt-4 text-white bg-blue-500 rounded"
                   >
                     بازنشانی فیلترها
                   </button>

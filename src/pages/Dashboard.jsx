@@ -56,15 +56,15 @@ const Dashboard = () => {
     return <Navigate to="/" replace />;
   }
   return (
-    <div className="w-full Padding mt-44 pb-10 flex flex-col xl:flex-row justify-between gap-6">
-      <div className="w-full xl:w-72 space-y-5">
+    <div className="flex flex-col justify-between w-full gap-6 pb-10 Padding mt-44 xl:flex-row">
+      <div className="w-full space-y-5 xl:w-72">
         <div className={`w-full h-23 bg-white shadow-2xl rounded-2xl flex justify-start items-center px-6 gap-4 ${loading ? "animate-pulse" : ""}`}>
           {loading ? (
             <>
-              <div className="w-14 h-14 rounded-full bg-neutral-gray-3"></div>
+              <div className="rounded-full w-14 h-14 bg-neutral-gray-3"></div>
               <div className="space-y-2">
-                <div className="bg-neutral-gray-3 w-20 h-3 rounded-full"></div>
-                <div className="bg-neutral-gray-3 w-32 h-2 rounded-full"></div>
+                <div className="w-20 h-3 rounded-full bg-neutral-gray-3"></div>
+                <div className="w-32 h-2 rounded-full bg-neutral-gray-3"></div>
               </div>
 
               <div className="mr-auto">
@@ -73,14 +73,14 @@ const Dashboard = () => {
             </>
           ) : (
             <>
-              <div className="w-14 h-14 rounded-full border border-primary flex justify-center items-center">
+              <div className="flex items-center justify-center border rounded-full w-14 h-14 border-primary">
                 <User className="size-7 stroke-primary" />
               </div>
               <div className="space-y-2">
-                <p className="text-neutral-gray-10 font-bold line-clamp-1 text-right">
+                <p className="font-bold text-right text-neutral-gray-10 line-clamp-1">
                   {userInfo?.fName} {userInfo?.lName}
                 </p>
-                <p dir="ltr" className="text-neutral-gray-7 text-sm text-right">
+                <p dir="ltr" className="text-sm text-right text-neutral-gray-7">
                   {formatPhoneNumber(userInfo?.phoneNumber)}
                 </p>
               </div>
@@ -92,13 +92,13 @@ const Dashboard = () => {
           )}
         </div>
 
-        <div className="w-full flex flex-col items-center gap-y-5 bg-white shadow-2xl rounded-2xl p-6">
+        <div className="flex flex-col items-center w-full p-6 bg-white shadow-2xl gap-y-5 rounded-2xl">
           {path.map((e, index) => {
             const CustomIcon = e.icon;
             const Element = e.label === "خروج" ? "button" : Link;
             return (
               <React.Fragment key={index}>
-                <Element onClick={() => (e.label === "خروج" ? handleClick() : null)} to={e.label === "خروج" ? null : e.path} className="flex w-full justify-start items-center gap-x-2 group">
+                <Element onClick={() => (e.label === "خروج" ? handleClick() : null)} to={e.label === "خروج" ? null : e.path} className="flex items-center justify-start w-full gap-x-2 group">
                   <div>
                     <CustomIcon className={`size-6 ${e.label === "خروج" ? "rotate-180 stroke-error" : `${location.pathname === e.path ? "stroke-primary" : "stroke-neutral-gray-9 group-hover:stroke-primary"}`}`} />
                   </div>
@@ -117,10 +117,10 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="bg-white border border-neutral-gray-3 rounded-2xl flex-1 p-6 flex flex-col">
-        <strong className="text-neutral-gray-11 font-bold">{activePath?.label || null}</strong>
+      <div className="flex flex-col flex-1 p-6 bg-white border border-neutral-gray-3 rounded-2xl">
+        <strong className="font-bold text-neutral-gray-11">{activePath?.label || null}</strong>
 
-        <hr className="w-full border border-neutral-gray-2 mt-6" />
+        <hr className="w-full mt-6 border border-neutral-gray-2" />
 
         {activePath?.children || null}
       </div>

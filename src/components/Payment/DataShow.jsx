@@ -32,13 +32,13 @@ const DataShow = () => {
     },
   ];
   return (
-    <div className="w-full flex flex-row justify-start items-start flex-wrap gap-10">
+    <div className="flex flex-row flex-wrap items-start justify-start w-full gap-10">
       {dataShow.map((e, index) => (
-        <div className="flex items-center gap-x-2 border py-1 px-2 rounded-lg border-neutral-gray-4" key={index}>
+        <div className="flex items-center px-2 py-1 border rounded-lg gap-x-2 border-neutral-gray-4" key={index}>
           <TickSquare className="size-6 stroke-neutral-gray-11" />
           <div className="space-y-1">
-            <p className="stroke-neutral-gray-10 text-sm">{e.Label}</p>
-            <p className="stroke-neutral-gray-7 text-xs font-medium">{e.value}</p>
+            <p className="text-sm stroke-neutral-gray-10">{e.Label}</p>
+            <p className="text-xs font-medium stroke-neutral-gray-7">{e.value}</p>
           </div>
         </div>
       ))}

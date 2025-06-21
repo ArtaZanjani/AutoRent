@@ -108,21 +108,21 @@ const SearchBar = ({ isOpen, onClose }) => {
         <motion.div onClick={(e) => e.stopPropagation()} className={`w-full absolute top-0 left-0 py-6 bg-white space-y-6`} initial={{ y: -150 }} animate={{ y: -0 }} exit={{ y: -150 }} transition={{ duration: 0.225, ease: [0.4, 0, 0.2, 1] }}>
           <div className="relative px-3">
             {value.length < 1 && (
-              <div className="absolute top-1/2 -translate-y-1/2 right-3 pointer-events-none flex items-center gap-x-2">
+              <div className="absolute flex items-center -translate-y-1/2 pointer-events-none top-1/2 right-3 gap-x-2">
                 <SearchNormal1 className="size-6 stroke-neutral-gray-5" />
                 <span className="font-medium text-neutral-gray-5">جستجو</span>
               </div>
             )}
 
-            <input type="text" className="h-10 bg-white w-full" value={value} onChange={(e) => setValue(e.target.value)} />
+            <input type="text" className="w-full h-10 bg-white" value={value} onChange={(e) => setValue(e.target.value)} />
           </div>
 
           <hr className="w-full border border-neutral-gray-2" />
 
           {localSearch && localSearch?.length > 0 && value.length < 1 && (
-            <div className="w-full flex flex-col gap-y-6">
-              <div className="w-full flex justify-between items-center px-3">
-                <p className="text-neutral-gray-9 font-medium">تاریخچه جستجوهای شما</p>
+            <div className="flex flex-col w-full gap-y-6">
+              <div className="flex items-center justify-between w-full px-3">
+                <p className="font-medium text-neutral-gray-9">تاریخچه جستجوهای شما</p>
 
                 <button onClick={handleClear}>
                   <Trash className="size-7 stroke-neutral-gray-7" />
@@ -140,8 +140,8 @@ const SearchBar = ({ isOpen, onClose }) => {
           ) : (
             <>
               {data?.length > 0 && value.length > 0 && (
-                <div className="w-full flex flex-col gap-y-6">
-                  <p className="text-neutral-gray-9 font-medium px-3">نتایج جستجو</p>
+                <div className="flex flex-col w-full gap-y-6">
+                  <p className="px-3 font-medium text-neutral-gray-9">نتایج جستجو</p>
                   <SearchSwiper items={data} onClick={(e) => handleNavigate(e.id, `${e.brand} ${e.model}`)} getLabel={(e) => `${e.brand} ${e.model}`} />
                 </div>
               )}
