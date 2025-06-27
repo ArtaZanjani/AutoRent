@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import useScrollBody from "@/hooks/useScrollBody";
-import { use, useEffect } from "react";
+import { useEffect } from "react";
 
 const BaseBg = ({ children, isOpen, onClose }) => {
   const { setIsScrolling } = useScrollBody();

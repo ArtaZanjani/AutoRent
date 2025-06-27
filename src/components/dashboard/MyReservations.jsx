@@ -4,10 +4,8 @@ import BaseImage from "../common/BaseImage";
 import { motion } from "motion/react";
 import BaseBg from "@/components/common/BaseBg";
 import { capitalAirports } from "@/utils/utils";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
 
-const MyReservations = ({ data = [], isLoading, error }) => {
+const MyReservations = ({ data = [] }) => {
   const [filter, setFilter] = useState("جاری");
   const [errorList, setErrorList] = useState([]);
   const [idDataMore, setIdDataMore] = useState(null);

@@ -165,7 +165,7 @@ const ProductDetail = ({ setAuthOpen }) => {
         carInfo: {
           id: id,
           carName: brandName,
-          carImage: `${import.meta.env.VITE_API_CARS_IMAGE}${dataCars?.[0]?.Image}`,
+          carImage: dataCars?.[0]?.Image,
           price: +calculateTotalPrice(),
           securityDeposit: dataCars?.[0]?.price?.securityDeposit,
         },
@@ -231,7 +231,7 @@ const ProductDetail = ({ setAuthOpen }) => {
           </div>
 
           <div className="w-full h-[503px] bg-white border border-neutral-gray-2 rounded-2xl">
-            <BaseImage src={`${import.meta.env.VITE_API_CARS_IMAGE}${dataCars?.[0]?.Image}`} alt={`${dataCars?.[0]?.brand} ${dataCars?.[0]?.model}`} />
+            <BaseImage src={dataCars?.[0]?.Image} alt={`${dataCars?.[0]?.brand} ${dataCars?.[0]?.model}`} />
           </div>
 
           <div className="w-full p-6 pb-3 space-y-3 bg-white border min-h-32 rounded-2xl border-neutral-gray-2">
