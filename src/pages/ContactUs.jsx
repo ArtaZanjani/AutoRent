@@ -1,15 +1,15 @@
 import Breadcrumbs from "@/components/common/Breadcrumbs";
 import { Location, Call, Sms } from "iconsax-react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useMemo, useState } from "react";
 import isEmail from "validator/lib/isEmail";
 import { useAuth } from "@/context/AuthContext";
-import { formatPhoneNumber } from "@/utils/function";
 import { toast } from "sonner";
+import mapPin from "@/assets/icons/mapPin.webp";
 
 const persianRegex = /^[\u0600-\u06FF\s]+$/;
-const phoneRegex = /^09[0-9]{9}$/;
 const persianWithNumbersRegex = /^[\u0600-\u06FF\s\d۰-۹]+$/;
 
 const ContactUs = () => {
@@ -126,6 +126,13 @@ const ContactUs = () => {
     }
   };
 
+  const customIcon = new L.Icon({
+    iconUrl: mapPin, 
+    iconSize: [32, 32],
+    iconAnchor: [16, 32], 
+    popupAnchor: [0, -25],
+  });
+
   return (
     <main className="w-full min-h-screen">
       <Breadcrumbs title="تماس با ما" crumbs={[{ path: null, title: "تماس با ما" }]} />
@@ -147,7 +154,7 @@ const ContactUs = () => {
             <div className="w-full lg:w-[320px] !z-10 h-[320px] rounded-2xl overflow-hidden shadow-2xl">
               <MapContainer center={[35.7006, 51.337]} minZoom={10} maxZoom={18} zoom={13} scrollWheelZoom={true} zoomControl={false} className="w-full h-full">
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors' />
-                <Marker position={[35.7006, 51.337]}>
+                <Marker position={[35.7006, 51.337]} icon={customIcon}>
                   <Popup>دفتر مرکزی اتورنت</Popup>
                 </Marker>
               </MapContainer>

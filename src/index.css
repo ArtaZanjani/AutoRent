@@ -221,6 +221,10 @@
   .leaflet-popup {
     @apply !bottom-0;
   }
+
+  .leaflet-container .leaflet-marker-pane img {
+    @apply object-contain;
+  }
 }
 
 @layer components {
