@@ -11,15 +11,19 @@ import FetchErrorComp from "@/components/common/FetchErrorComp";
 
 const fetchBlogs = async ({ pageParam = 1 }) => {
   try {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/blog?_page=${pageParam}&_limit=4&_sort=publishDate,views&_order=desc,desc`);
+    const offset = (pageParam - 1) * 4;
+    const res = await fetch(`${import.meta.env.VITE_API_URL}blog?limit=4&offset=${offset}&order=publishDate.desc,views.desc`, {
+      headers: {
+        apikey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhqdWhzd2huZGZwanV6dGphYmZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5NzgyNDAsImV4cCI6MjA2NjU1NDI0MH0.pNAixwBCETl9h7PyDhjJFpNwZDfSHLRbzFK5YJ9M0so",
+        "Content-Type": "application/json",
+      },
+    });
     if (!res.ok) throw new Error("Network response was not ok");
     const data = await res.json();
-    const total = res.headers.get("x-total-count");
 
     return {
       data,
       nextPage: pageParam + 1,
-      total: parseInt(total),
     };
   } catch (error) {
     console.error("Fetch blogs error:", error);
@@ -39,9 +43,8 @@ const Blog = () => {
   const { data, isLoading, isError, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } = useInfiniteQuery({
     queryKey: ["blogs"],
     queryFn: fetchBlogs,
-    getNextPageParam: (lastPage, allPages) => {
-      const totalSoFar = allPages.flatMap((p) => p.data).length;
-      return totalSoFar < lastPage.total ? lastPage.nextPage : undefined;
+    getNextPageParam: (lastPage) => {
+      return lastPage.data.length === 4 ? lastPage.nextPage : undefined;
     },
   });
 
@@ -150,7 +153,7 @@ const Blog = () => {
                   <div key={blog?.id} className={`w-full p-2 ${index !== sortedBlogs.length - 1 && "border-b border-neutral-gray-3"}`}>
                     <Link to={`/blog/${blog?.id}`} className="w-full h-full flex items-center gap-x-3.5">
                       <div className={`w-20.5 h-20.5 rounded-lg overflow-hidden ${errorList.includes(blog?.id) ? "bg-primary/10 px-1" : ""}`}>
-                        <BaseImage src={`${import.meta.env.VITE_API_BLOGS_IMAGE}${blog.image}`} alt={blog.title} onError={() => onImageError(blog?.id)} className={`w-full h-full ${errorList.includes(blog?.id) ? "object-contain" : "object-cover"}`} />
+                        <BaseImage src={blog.image} alt={blog.title} onError={() => onImageError(blog?.id)} className={`w-full h-full ${errorList.includes(blog?.id) ? "object-contain" : "object-cover"}`} />
                       </div>
 
                       <div className="flex-1 space-y-3">

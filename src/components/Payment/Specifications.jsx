@@ -7,7 +7,7 @@ import isEmail from "validator/lib/isEmail";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "@/context/SearchProvider";
-import { formatPhoneNumber } from "@/utils/function";
+
 
 const Specifications = () => {
   const { userInfo } = useAuth();
@@ -17,14 +17,12 @@ const Specifications = () => {
     { icon: UserSquare, enLabel: "firstName", label: "نام", type: "text", value: userInfo?.fName || "", error: "" },
     { icon: SecurityUser, enLabel: "lastName", label: "نام خانوادگی", type: "text", value: userInfo?.lName || "", error: "" },
     { icon: UserSquare, enLabel: "nationalId", label: "کد ملی", type: "tel", value: userInfo?.nationalId || "", error: "" },
-    { icon: Call, enLabel: "phoneNumber", label: "شماره موبایل", type: "tel", value: formatPhoneNumber(userInfo?.phoneNumber) || "+98", error: "" },
     { icon: Sms, enLabel: "email", label: "ایمیل", type: "email", value: userInfo?.email || "", error: "" },
   ]);
 
   const [activeIndex, setActiveIndex] = useState(null);
   const matches = useMediaQuery("(min-width:1190px)");
   const persianRegex = /^[\u0600-\u06FF\s]+$/;
-  const phoneRegex = /^09[0-9]{9}$/;
   const codeMeliRegex = /^\d{10}$/;
   const navigate = useNavigate();
 
@@ -49,15 +47,6 @@ const Specifications = () => {
           if (!persianRegex.test(value) && value) {
             error = "فقط حروف پارسی مجاز است";
           }
-        } else if (input.label === "شماره موبایل") {
-          newValue = formatPhoneNumber(value);
-
-          const normalized = "0" + newValue.replace(/\D/g, "").slice(-10);
-          if (normalized.length === 1) {
-            error = "";
-          } else if (!phoneRegex.test(normalized)) {
-            error = "شماره موبایل معتبر نیست";
-          }
         } else if (input.label === "کد ملی") {
           newValue = value.replace(/\D/g, "");
           if (newValue.length > 10) newValue = newValue.slice(0, 10);
@@ -76,9 +65,6 @@ const Specifications = () => {
   };
 
   const isFilled = (input) => {
-    if (input.label === "شماره موبایل") {
-      return input.value && input.value !== "+98";
-    }
     return input.value;
   };
 
@@ -88,9 +74,6 @@ const Specifications = () => {
     const specs = inputs.reduce((acc, cur) => {
       let cleanValue = cur.value;
 
-      if (cur.enLabel === "phoneNumber") {
-        cleanValue = cleanValue.replace(/\s+/g, "");
-      }
       if (cur.enLabel === "nationalId") {
         cleanValue = cleanValue.replace(/\D/g, "");
       }
@@ -103,7 +86,7 @@ const Specifications = () => {
       ...prev,
       specifications: {
         ...specs,
-        userId: +userInfo?.id,
+        userId: userInfo?.id,
       },
     }));
 
@@ -146,15 +129,6 @@ const Specifications = () => {
                     onChange={(ev) => handleChange(index, ev.target.value)}
                     onKeyDown={(ev) => {
                       if (ev.ctrlKey || ev.metaKey) return;
-
-                      if (e.label === "شماره موبایل") {
-                        if ((ev.key === "Backspace" || ev.key === "Delete") && ev.target.selectionStart <= 3) {
-                          ev.preventDefault();
-                        }
-                        if (!/[0-9]/.test(ev.key) && !["Backspace", "ArrowLeft", "ArrowRight", "Delete", "Tab"].includes(ev.key)) {
-                          ev.preventDefault();
-                        }
-                      }
 
                       if (e.label === "کد ملی") {
                         if (!/[0-9]/.test(ev.key) && !["Backspace", "ArrowLeft", "ArrowRight", "Delete", "Tab"].includes(ev.key)) {

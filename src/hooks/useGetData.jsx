@@ -14,13 +14,22 @@ const useGetData = (path) => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(path);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}${path}`, {
+          headers: {
+            apikey: import.meta.env.VITE_API_KEY,
+            Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        const result = await response.json();
 
         if (!response.ok) {
+          console.log(result);
+
           throw new Error(`Error ${response.status}`);
         }
 
-        const result = await response.json();
         setData(result);
       } catch (err) {
         addError(err.message || "Unknown error");

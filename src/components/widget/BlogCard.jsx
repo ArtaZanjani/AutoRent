@@ -59,7 +59,7 @@ const BlogCard = ({ blog }) => {
     <article itemScope itemType="https://schema.org/Article" className="w-full xs:w-98 h-92.5 bg-white border border-neutral-gray-2 rounded-2xl overflow-hidden">
       <Link to={`/blog/${id}`} className="flex flex-col items-center justify-between w-full h-full p-4 no-underline text-inherit" itemProp="url">
         <div className={`w-full h-49 rounded-xl overflow-hidden relative ${imageError ? "p-10 bg-primary/20" : ""}`}>
-          <BaseImage src={`${import.meta.env.VITE_API_BLOGS_IMAGE}${image}`} alt={title} className={`w-full h-full ${imageError ? "object-contain" : "object-cover"}`} onError={() => setImageError(true)} />
+          <BaseImage src={image} alt={title} className={`w-full h-full ${imageError ? "object-contain" : "object-cover"}`} onError={() => setImageError(true)} />
         </div>
 
         <h2 className="w-full font-medium text-neutral-gray-11" itemProp="headline">

@@ -7,17 +7,19 @@ import { useEffect } from "react";
 
 const BlogDetails = () => {
   const { id } = useParams();
-  const { data, isLoading, isError } = useFetch(["blog", id], `/blog/${id}`);
+  const { data, isLoading, isError } = useFetch(["blog", id], `blog?id=eq.${id}`);
   const navigate = useNavigate();
+
+  const blog = data?.[0];
 
   const dataMap = [
     {
       icon: <Clock className="size-6 stroke-neutral-gray-11" />,
-      value: `زمان مطالعه: ${data?.reading_time}`,
+      value: `زمان مطالعه: ${blog?.reading_time}`,
     },
     {
       icon: <Calendar className="size-6 stroke-neutral-gray-11" />,
-      value: new Date(data?.publishDate).toLocaleDateString("fa-IR"),
+      value: new Date(blog?.publishDate).toLocaleDateString("fa-IR"),
     },
   ];
 
@@ -37,7 +39,7 @@ const BlogDetails = () => {
     return (
       <div className="w-full min-h-screen">
         <Breadcrumbs
-          title={data?.title}
+          title={blog?.title}
           crumbs={[
             { path: "/blog", title: "مقالات" },
             { path: null, title: id },
@@ -76,7 +78,7 @@ const BlogDetails = () => {
   return (
     <main className="w-full min-h-screen">
       <Breadcrumbs
-        title={data?.title}
+        title={blog?.title}
         crumbs={[
           { path: "/blog", title: "مقالات" },
           { path: null, title: id },
@@ -84,7 +86,7 @@ const BlogDetails = () => {
       />
 
       <div className="flex flex-col w-full Padding gap-y-4">
-        <h2 className="font-bold text-neutral-gray-11 text-[clamp(1.75rem,4vw,2.75rem)]">{data?.title}</h2>
+        <h2 className="font-bold text-neutral-gray-11 text-[clamp(1.75rem,4vw,2.75rem)]">{blog?.title}</h2>
 
         <div className="flex items-center w-full gap-6">
           {dataMap.map((e, index) => (
@@ -95,10 +97,10 @@ const BlogDetails = () => {
           ))}
         </div>
 
-        <BaseImage src={`${import.meta.env.VITE_API_BLOGS_IMAGE}${data?.image}`} className="w-full h-[386px] object-cover rounded-2xl" />
+        <BaseImage src={blog?.image} className="w-full h-[386px] object-cover rounded-2xl" />
 
         <div className="w-full space-y-8">
-          {data?.mainDescription?.map((e, index) => (
+          {blog?.mainDescription?.map((e, index) => (
             <div className="flex flex-col gap-y-4" key={index}>
               <strong className="text-[clamp(1.75rem,4vw,2.75rem)] text-neutral-gray-11">{e.title}</strong>
 

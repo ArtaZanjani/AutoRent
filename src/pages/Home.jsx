@@ -27,7 +27,6 @@ import Sport from "@/assets/icons/carType/Sport.webp";
 import CarReservationHome from "@/components/homePage/CarReservationHome";
 import Learn from "@/components/homePage/Learn";
 import AccordionHome from "@/components/homePage/AccordionHome.jsx";
-import Comments from "@/components/homePage/Comments.jsx";
 import BlogHome from "@/components/homePage/BlogHome.jsx";
 
 const carBrands = [
@@ -199,7 +198,7 @@ const Home = () => {
           <CarReservationHome />
           <Learn />
           <AccordionHome />
-          <Comments />
+
           <BlogHome />
         </div>
       </main>

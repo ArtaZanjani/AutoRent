@@ -56,7 +56,7 @@ const SearchBar = ({ isOpen, onClose }) => {
       }
 
       const term = encodeURIComponent(value.trim());
-      const query = `${import.meta.env.VITE_API_URL}/search-cars?q=${term}`;
+      const query = `${import.meta.env.VITE_API_URL}cars?and=(inventory.eq.true,or(brand.ilike.*${term}*,model.ilike.*${term}*))`;
       GetData(setData, setIsLoading, setError, query);
     }, 500);
 

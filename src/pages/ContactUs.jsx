@@ -16,9 +16,6 @@ const ContactUs = () => {
   const { userInfo } = useAuth();
 
   const isFilled = (input) => {
-    if (input.label === "شماره موبایل") {
-      return input.value && input.value !== "+98";
-    }
     return input.value;
   };
 
@@ -43,12 +40,6 @@ const ContactUs = () => {
         label: "نام و نام خانوادگی",
         type: "text",
         value: userInfo ? `${userInfo?.fName} ${userInfo?.lName}` : "",
-        error: "",
-      },
-      {
-        label: "شماره موبایل",
-        type: "tel",
-        value: formatPhoneNumber(userInfo?.phoneNumber) || "+98",
         error: "",
       },
       {
@@ -86,19 +77,6 @@ const ContactUs = () => {
           if (/\d/.test(value)) {
             error = "اعداد مجاز نیست";
           }
-        } else if (input.label === "شماره موبایل") {
-          newValue = formatPhoneNumber(value);
-
-          const cleaned = newValue.replace(/[^\d+]/g, "");
-
-          if (cleaned === "" || cleaned === "+98") {
-            error = "";
-          } else {
-            const normalized = "0" + cleaned.replace(/\D/g, "").slice(-10);
-            if (!phoneRegex.test(normalized)) {
-              error = "شماره موبایل معتبر نیست";
-            }
-          }
         } else if (input.label === "ایمیل") {
           if (value && persianRegex.test(value)) {
             error = "ایمیل نمی‌تواند حروف فارسی داشته باشد";
@@ -124,16 +102,16 @@ const ContactUs = () => {
 
   const SendData = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/contact-us`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}contact_us`, {
         method: "POST",
         headers: {
+          apikey: import.meta.env.VITE_API_KEY,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           userData: inputs[0].value.trim(),
-          phoneNumber: inputs[1].value.replace(/\s/g, ""),
-          email: inputs[2].value.trim(),
-          message: inputs[3].value.trim(),
+          email: inputs[1].value.trim(),
+          message: inputs[2].value.trim(),
         }),
       });
 
@@ -182,7 +160,7 @@ const ContactUs = () => {
 
           <div className="flex flex-col items-start justify-between w-full gap-10 xl:flex-row">
             <div className="flex flex-col justify-between gap-y-6 w-full  xl:w-fit xl:min-h-[227px]">
-              {inputs.slice(0, 3).map((input, index) => {
+              {inputs.slice(0, 2).map((input, index) => {
                 const filled = isFilled(input);
 
                 return (
@@ -201,15 +179,6 @@ const ContactUs = () => {
                         onChange={(ev) => handleChange(index, ev.target.value)}
                         onKeyDown={(ev) => {
                           if (ev.ctrlKey || ev.metaKey) return;
-
-                          if (input.label === "شماره موبایل") {
-                            if ((ev.key === "Backspace" || ev.key === "Delete") && ev.target.selectionStart <= 3) {
-                              ev.preventDefault();
-                            }
-                            if (!/[0-9]/.test(ev.key) && !["Backspace", "ArrowLeft", "ArrowRight", "Delete", "Tab"].includes(ev.key)) {
-                              ev.preventDefault();
-                            }
-                          }
                         }}
                       />
                     </div>
@@ -221,13 +190,13 @@ const ContactUs = () => {
             </div>
 
             <div className="flex flex-col flex-1 w-full xl:w-fit">
-              {inputs.slice(3).map((input, index) => (
+              {inputs.slice(2).map((input, index) => (
                 <div key={index} className="w-full">
                   <div className="relative">
                     <label htmlFor={`textarea-${index}`} className={`pointer-events-none right-2 bg-white z-10 transition-all absolute px-2 ${input.error ? "text-error" : input.value ? "text-info-light-1" : "text-neutral-gray-4"} ${input.value ? "-top-3 text-sm" : "top-3"}`}>
                       {input.label}
                     </label>
-                    <textarea id={`textarea-${index}`} className={`w-full min-h-34 border inpBase pt-2 ${input.error ? "border-error" : input.value ? "border-info-light-1" : "border-neutral-gray-4"}`} value={input.value} onChange={(e) => handleChange(index + 3, e.target.value)} maxLength={input.maxLength} />
+                    <textarea id={`textarea-${index}`} className={`w-full min-h-34 border inpBase pt-2 ${input.error ? "border-error" : input.value ? "border-info-light-1" : "border-neutral-gray-4"}`} value={input.value} onChange={(e) => handleChange(index + 2, e.target.value)} maxLength={input.maxLength} />
                   </div>
 
                   {input.error && input.value.length > 0 && <p className="mt-1 mr-2 text-xs text-red-500">{input.error}</p>}

@@ -12,7 +12,7 @@ const Card = ({ car }) => {
   return (
     <div className="w-full xs:w-[392px] h-[500px] bg-white border border-neutral-gray-2 rounded-2xl overflow-hidden p-3 flex flex-col justify-start items-center gap-y-3">
       <div className="relative w-full h-56 p-0 overflow-hidden border pointer-events-none border-neutral-gray-2 rounded-xl">
-        <BaseImage src={`${import.meta.env.VITE_API_CARS_IMAGE}${imgUrl}`} alt={`${brand} ${model}`} />
+        <BaseImage src={imgUrl} alt={`${brand} ${model}`} />
         {price.discount > 0 && <div className="absolute flex items-center justify-center font-medium text-white rounded-md top-2 left-2 w-11 h-11 bg-primary-shade-3">%{price.discount.toLocaleString()}</div>}
       </div>
 

@@ -66,7 +66,12 @@ const ProductList = () => {
     setIsLoading(true);
     const debounceTimer = setTimeout(async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/cars`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}cars`, {
+          headers: {
+            apikey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhqdWhzd2huZGZwanV6dGphYmZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5NzgyNDAsImV4cCI6MjA2NjU1NDI0MH0.pNAixwBCETl9h7PyDhjJFpNwZDfSHLRbzFK5YJ9M0so",
+            "Content-Type": "application/json",
+          },
+        });
         if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
         const data = await response.json();
 

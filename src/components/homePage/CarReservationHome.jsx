@@ -14,7 +14,7 @@ const Tags = ["پرطرفدار", "لوکس", "اقتصادی"];
 const CarReservationHome = () => {
   const [activeTag, setActiveTag] = useState(Tags[0]);
   const [groupedData, setGroupedData] = useState([]);
-  const { data, isLoading } = useGetData(`${import.meta.env.VITE_API_URL}/cars?inventory=true&_limit=50&_sort=publishDate&_order=desc`);
+  const { data, isLoading } = useGetData("cars?select=*&inventory=eq.true&order=publishDate.desc&limit=50");
 
   const filteredData = groupedData.filter((car) => car.tags?.includes(activeTag));
 

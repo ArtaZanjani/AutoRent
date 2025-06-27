@@ -7,8 +7,8 @@ import CheckBox from "@/components/common/CheckBox";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
-import { Add, UserSquare, SecurityUser, Call, Sms, Eye, EyeSlash } from "iconsax-react";
-import { formatPhoneNumber, validatePassword, phoneRegex, validateCodeMeli, persianRegex } from "@/utils/function";
+import { Add, UserSquare, SecurityUser, Sms, Eye, EyeSlash } from "iconsax-react";
+import { validatePassword, validateCodeMeli, persianRegex } from "@/utils/function";
 import Logo from "@/assets/icons/Logo.webp";
 
 const baseInputs = [
@@ -32,7 +32,6 @@ const Auth = ({ isAuthOpen, onClose }) => {
             { icon: UserSquare, id: "fname", label: "نام", value: "", error: "", type: "text" },
             { icon: SecurityUser, id: "lname", label: "نام خانوادگی", value: "", error: "", type: "text" },
             { icon: UserSquare, id: "nationalId", label: "کد ملی", value: "", error: "", type: "tel" },
-            { icon: Call, id: "phoneNumber", label: "شماره موبایل", value: "+98", error: "", type: "tel" },
             { icon: Sms, id: "email", label: "ایمیل", value: "", error: "", type: "email" },
             { icon: null, id: "password", label: "رمز عبور", value: "", error: "", type: "password" },
             { icon: null, id: "confirmPassword", label: "تکرار رمز عبور", value: "", error: "", type: "password" },
@@ -80,23 +79,6 @@ const Auth = ({ isAuthOpen, onClose }) => {
             }
           }
 
-          if (id === "phoneNumber") {
-            value = formatPhoneNumber(value);
-
-            const digits = value.replace(/\D/g, "").slice(-10);
-            const normalized = "0" + digits;
-
-            if (digits.length === 0) {
-              error = "";
-              isValid = false;
-            } else if (!phoneRegex.test(normalized)) {
-              error = "شماره موبایل معتبر نیست";
-              isValid = false;
-            } else {
-              isValid = true;
-            }
-          }
-
           if (id === "nationalId") {
             value = value.replace(/\D/g, "");
             if (value.length > 10) value = value.slice(0, 10);
@@ -122,49 +104,63 @@ const Auth = ({ isAuthOpen, onClose }) => {
   const isValid = inputs.every((e) => e.value.length > 0 && !e.error && e.isValid) && acceptRules;
 
   const handleLogin = async () => {
-    const dataLogin = {
-      email: inputs[0].value.trim(),
-      password: inputs[1].value.trim(),
-    };
+    const email = inputs[0].value.trim();
+    const password = inputs[1].value.trim();
+
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
+      const response = await fetch(`${import.meta.env.VITE_API_AUTH_URL}token?grant_type=password`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          apikey: import.meta.env.VITE_API_KEY,
         },
-        body: JSON.stringify(dataLogin),
+        body: JSON.stringify({
+          email,
+          password,
+        }),
       });
-
-      if (!response.ok) {
-        toast.error(response.status);
-        return;
-      }
 
       const data = await response.json();
 
-      setUserToken(data.accessToken);
+      if (!response.ok) {
+        toast.error(data.error_description || "خطا در ورود");
+        return;
+      }
+
+      setUserToken(data.access_token);
     } catch (error) {
-      toast.error(error.message);
+      console.error("Login error:", error);
+      toast.error("خطای اتصال به سرور");
     }
   };
 
   const handleRegister = async () => {
-    const cleanedPhone = "+98" + inputs[3].value.replace(/\D/g, "").replace(/^98/, "");
     const dataLogin = {
       fName: inputs[0].value.trim(),
       lName: inputs[1].value.trim(),
       nationalId: inputs[2].value.trim(),
-      phoneNumber: cleanedPhone,
-      email: inputs[4].value.trim(),
-      password: inputs[5].value.trim(),
+      email: inputs[3].value.trim(),
+      password: inputs[4].value.trim(),
     };
+
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/register`, {
+      const response = await fetch(`${import.meta.env.VITE_API_AUTH_URL}signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          apikey: import.meta.env.VITE_API_KEY,
         },
-        body: JSON.stringify(dataLogin),
+        body: JSON.stringify({
+          email: dataLogin.email,
+          password: dataLogin.password,
+
+          data: {
+            fName: dataLogin.fName,
+            lName: dataLogin.lName,
+            nationalId: dataLogin.nationalId,
+            email: dataLogin.email,
+          },
+        }),
       });
 
       if (!response.ok) {
@@ -172,10 +168,33 @@ const Auth = ({ isAuthOpen, onClose }) => {
         return;
       }
 
-      const data = await response.json();
+      const authData = await response.json();
 
-      setUserToken(data.accessToken);
+      const profileResponse = await fetch(`${import.meta.env.VITE_API_URL}/profiles`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          apikey: import.meta.env.VITE_SERVICE_ROLE_KEY,
+          Authorization: `Bearer ${import.meta.env.VITE_SERVICE_ROLE_KEY}`,
+        },
+        body: JSON.stringify({
+          id: authData.user.id,
+          fName: dataLogin.fName,
+          lName: dataLogin.lName,
+          nationalId: dataLogin.nationalId,
+          email: dataLogin.email,
+        }),
+      });
+
+      if (!profileResponse.ok) {
+        toast.error("خطا در ایجاد پروفایل");
+        return;
+      }
+
+      toast.success("حساب و پروفایل با موفقیت ساخته شد");
+      setUserToken(authData.access_token);
     } catch (error) {
+      console.log(error.message);
       toast.error(error.message);
     }
   };

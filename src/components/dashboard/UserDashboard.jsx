@@ -1,6 +1,6 @@
 import Spinner from "@/components/ui/Spinner";
-import React, { useRef, useState } from "react";
-import { formatPhoneNumber, validatePassword, phoneRegex, validateCodeMeli, persianRegex } from "@/utils/function";
+import React, { useEffect, useRef, useState } from "react";
+import { validatePassword, validateCodeMeli, persianRegex } from "@/utils/function";
 import { Edit2, CloseCircle, TickCircle } from "iconsax-react";
 import isEmail from "validator/lib/isEmail";
 import useMediaQuery from "@/hooks/useMediaQuery";
@@ -8,18 +8,38 @@ import { toast } from "sonner";
 import { useAuth } from "@/context/AuthContext";
 
 const UserDashboard = () => {
-  const { loading, userInfo, setUserInfo } = useAuth();
-  const defaultValues = useRef([userInfo?.fName || "", userInfo?.lName || "", userInfo?.nationalId || "", formatPhoneNumber(userInfo?.phoneNumber) || "", userInfo?.email || "", "*********"]);
+  const { token, loading, userInfo, setUserInfo } = useAuth();
+
   const isSm = useMediaQuery("(min-width: 640px)");
 
-  const [inputs, setInputs] = useState([
-    { label: "نام", value: defaultValues.current[0], error: "", type: "text" },
-    { label: "نام خانوادگی", value: defaultValues.current[1], error: "", type: "text" },
-    { label: "کد ملی", value: defaultValues.current[2], error: "", type: "tel" },
-    { label: "شماره موبایل", value: defaultValues.current[3], error: "", type: "tel" },
-    { label: "ایمیل", value: defaultValues.current[4], error: "", type: "email" },
-    { label: "رمز عبور", value: defaultValues.current[5], error: "", type: "password" },
-  ]);
+  const defaultValues = useRef([]);
+
+  const [inputs, setInputs] = useState([]);
+
+  useEffect(() => {
+    if (!userInfo) return;
+
+    const values = [userInfo.fName || "", userInfo.lName || "", userInfo.nationalId || "", userInfo.email || "", "*********"];
+
+    defaultValues.current = values;
+
+    const fields = [
+      { label: "نام", type: "text", index: 0 },
+      { label: "نام خانوادگی", type: "text", index: 1 },
+      { label: "کد ملی", type: "tel", index: 2 },
+      { label: "ایمیل", type: "email", index: 3 },
+      { label: "رمز عبور", type: "password", index: 4 },
+    ];
+
+    const initialInputs = fields.map(({ label, type, index }) => ({
+      label,
+      type,
+      error: "",
+      value: values[index],
+    }));
+
+    setInputs(initialInputs);
+  }, [userInfo]);
 
   const [activeIndex, setActiveIndex] = useState(null);
 
@@ -27,10 +47,7 @@ const UserDashboard = () => {
     setInputs((prev) => {
       const updated = [...prev];
 
-      if (updated[index].label === "شماره موبایل") {
-        const onlyNumbers = newValue.replace(/\D/g, "");
-        updated[index] = { ...updated[index], value: formatPhoneNumber(onlyNumbers) };
-      } else if (updated[index].type === "tel") {
+      if (updated[index].type === "tel") {
         const onlyNumbers = newValue.replace(/\D/g, "");
         updated[index] = { ...updated[index], value: onlyNumbers };
       } else {
@@ -54,6 +71,33 @@ const UserDashboard = () => {
     setActiveIndex(activeIndex === index ? null : index);
   };
 
+  const updateAuth = async (field, value) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_AUTH_URL}user`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          apikey: import.meta.env.VITE_API_KEY,
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          [field]: value,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        toast.error(errorData.message || "خطا در به‌روزرسانی اطلاعات");
+        return;
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      toast.error(error.message || "خطا در ارتباط با سرور");
+    }
+  };
+
   const handleSave = async (index) => {
     const newInputs = [...inputs];
     let value = newInputs[index].value.trim();
@@ -74,19 +118,6 @@ const UserDashboard = () => {
     } else if (newInputs[index].label === "کد ملی") {
       if (!validateCodeMeli(value)) {
         error = "کد ملی نامعتبر است.";
-      }
-    } else if (newInputs[index].label === "شماره موبایل") {
-      value = formatPhoneNumber(value);
-
-      const digits = value.replace(/\D/g, "").slice(-10);
-      const normalized = "0" + digits;
-
-      if (digits.length === 0) {
-        error = "";
-      } else if (!phoneRegex.test(normalized)) {
-        error = "شماره موبایل معتبر نیست";
-      } else {
-        error = "";
       }
     } else if (newInputs[index].label === "ایمیل") {
       if (!isEmail(value)) {
@@ -117,7 +148,6 @@ const UserDashboard = () => {
       نام: "fName",
       "نام خانوادگی": "lName",
       "کد ملی": "nationalId",
-      "شماره موبایل": "phoneNumber",
       ایمیل: "email",
       "رمز عبور": "password",
     };
@@ -125,35 +155,68 @@ const UserDashboard = () => {
     const key = keysMap[newInputs[index].label];
     if (!key) return;
 
-    if (key === "phoneNumber") {
-      value = value.replace(/\s/g, "");
-    }
-
-    const body = {};
-    body[key] = value;
-
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/${userInfo.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
+      let updatedUserInfo = { ...userInfo, [key]: value };
 
-      if (!response.ok) {
-        toast.error("خطا در به‌روزرسانی اطلاعات");
-        return;
+      if (key === "email") {
+        const authData = await updateAuth(key, value);
+
+        const profileResponse = await fetch(`${import.meta.env.VITE_API_URL}profiles?id=eq.${userInfo.id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            apikey: import.meta.env.VITE_API_KEY,
+            Authorization: `Bearer ${import.meta.env.VITE_SERVICE_ROLE_KEY}`,
+            Prefer: "return=representation",
+          },
+          body: JSON.stringify({ email: value }),
+        });
+
+        if (!profileResponse.ok) {
+          const errorData = await profileResponse.json();
+          toast.error(errorData.message || "خطا در به‌روزرسانی ایمیل در جدول پروفایل");
+          return;
+        }
+
+        const profileData = await profileResponse.json();
+        updatedUserInfo = { ...userInfo, email: authData.email || value };
+        toast.success("ایمیل با موفقیت به‌روزرسانی شد. لطفاً ایمیل جدید را تأیید کنید.");
+      } else if (key === "password") {
+        const authData = await updateAuth(key, value);
+        updatedUserInfo = { ...userInfo, [key]: authData[key] || value };
+        toast.success("رمز عبور با موفقیت به‌روزرسانی شد.");
+      } else {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}profiles?id=eq.${userInfo.id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            apikey: import.meta.env.VITE_API_KEY,
+            Authorization: `Bearer ${import.meta.env.VITE_SERVICE_ROLE_KEY}`,
+            Prefer: "return=representation",
+          },
+          body: JSON.stringify(updatedUserInfo),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          toast.error(errorData.message || "خطا در به‌روزرسانی اطلاعات");
+          return;
+        }
+
+        const data = await response.json();
+        toast.success(`${data[0]?.fName} ${data[0]?.lName} عزیز اطلاعات با موفقیت به‌روزرسانی شد`);
       }
 
-      const data = await response.json();
-
-      toast.success(`${data?.fName} ${data?.lName} عزیز اطلاعات با موفقیت به‌روزرسانی شد`);
-
-      const updatedUserInfo = { ...userInfo, [key]: value };
       setUserInfo(updatedUserInfo);
     } catch (error) {
-      toast.error("خطا در ارتباط با سرور:", error);
+      setInputs((prev) => {
+        const reverted = [...prev];
+        reverted[index].value = defaultValues.current[index];
+        reverted[index].error = error.message;
+        return reverted;
+      });
+      setActiveIndex(index);
+      toast.error(`خطا در به‌روزرسانی ${newInputs[index].label}: ${error.message}`);
     }
   };
 
@@ -164,7 +227,7 @@ const UserDashboard = () => {
       ) : (
         <div className="flex flex-col w-full gap-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-[auto_auto] gap-6">
-            {inputs.map((e, index) => (
+            {inputs?.map((e, index) => (
               <React.Fragment key={index}>
                 <div className="space-y-2">
                   <div className="relative">
@@ -173,22 +236,13 @@ const UserDashboard = () => {
                         {e.label}
                       </label>
 
-                      {e.value.length > 0 ? <TickCircle className="size-6 stroke-success" /> : <CloseCircle className="size-6 stroke-error" />}
+                      {e.value?.length > 0 ? <TickCircle className="size-6 stroke-success" /> : <CloseCircle className="size-6 stroke-error" />}
                     </div>
 
                     <input
                       onChange={(event) => handleChange(index, event.target.value)}
                       onKeyDown={(ev) => {
                         if (ev.ctrlKey || ev.metaKey) return;
-
-                        if (e.label === "شماره موبایل") {
-                          if ((ev.key === "Backspace" || ev.key === "Delete") && ev.target.selectionStart <= 3) {
-                            ev.preventDefault();
-                          }
-                          if (!/[0-9]/.test(ev.key) && !["Backspace", "ArrowLeft", "ArrowRight", "Delete", "Tab"].includes(ev.key)) {
-                            ev.preventDefault();
-                          }
-                        }
 
                         if (e.label === "کد ملی") {
                           if (!/[0-9]/.test(ev.key) && !["Backspace", "ArrowLeft", "ArrowRight", "Delete", "Tab"].includes(ev.key)) {

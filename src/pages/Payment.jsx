@@ -44,7 +44,7 @@ const Payment = () => {
     },
   ];
 
-  const missingSpecs = !BookingData?.specifications?.email || !BookingData?.specifications?.firstName || !BookingData?.specifications?.lastName || !BookingData?.specifications?.nationalId || !BookingData?.specifications?.phoneNumber || !BookingData?.specifications?.userId;
+  const missingSpecs = !BookingData?.specifications?.email || !BookingData?.specifications?.firstName || !BookingData?.specifications?.lastName || !BookingData?.specifications?.nationalId || !BookingData?.specifications?.userId;
   const pathsNeedSpecs = ["/payment/2", "/payment/3", "/payment/4"];
   if (!BookingData || !BookingData?.AirportCode || BookingData?.Date.length !== 2 || BookingData?.time.length !== 2 || !BookingData.carInfo?.carName || !BookingData.carInfo?.id || !BookingData.carInfo?.price || !BookingData.carInfo?.securityDeposit || !BookingData.insuranceOptions) {
     return <Navigate to="/product-list" />;

@@ -9,7 +9,7 @@ import BlogCardSkeleton from "@/components/skeleton/BlogCardSkeleton";
 const BlogHome = () => {
   const matches = useMediaQuery("(min-width:888px)");
 
-  const { data: blog, loading } = useGetData(`${import.meta.env.VITE_API_URL}/blog?_sort=publishDate,views&_order=desc,desc&_limit=4`);
+  const { data: blog, loading } = useGetData("blog?select=*&order=publishDate.desc,views.desc&limit=4");
 
   return (
     <BaseSection className="space-y-10" description="مقالات ما" title="مجله" highlight="خودرو">

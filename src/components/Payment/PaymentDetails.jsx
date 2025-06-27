@@ -38,9 +38,9 @@ const PaymentDetails = () => {
 
   const changeInventoryMutation = useMutation({
     mutationFn: async (carId) => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/cars/${carId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}cars?id=eq.${carId}`, {
         method: "PATCH",
-        headers: { "Content-type": "application/json" },
+        headers: { apikey: import.meta.env.VITE_API_KEY, "Content-Type": "application/json" },
         body: JSON.stringify({ inventory: false }),
       });
       if (!res.ok) throw new Error("خطا در بروزرسانی موجودی");
@@ -67,9 +67,9 @@ const PaymentDetails = () => {
         status: "جاری",
       };
 
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/orders`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}orders`, {
         method: "POST",
-        headers: { "Content-type": "application/json" },
+        headers: { apikey: import.meta.env.VITE_API_KEY, "Content-Type": "application/json" },
         body: JSON.stringify(dataSend),
       });
 

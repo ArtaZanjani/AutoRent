@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { toast } from "sonner";
 import ProductDetailSkeleton from "@/components/skeleton/ProductDetailSkeleton";
 import { Star1, TickSquare, ArrowSwapVertical, Location, Calendar, Clock, Add, ArrowDown2 } from "iconsax-react";
 import BaseImage from "@/components/common/BaseImage";
@@ -27,25 +26,24 @@ const ProductDetail = ({ setAuthOpen }) => {
   const { isLoggedIn } = useAuth();
   const { setBookingData } = useContext(SearchContext);
 
-  const { data: dataCars, isLoading: loadingCars, error: errorCars } = useFetch(["repoData", id], `/cars/${id}`);
-  const { data: commentsCars, isLoading: loadingCommentsCars, error: errorCommentsCars } = useFetch(["car-comments", id], `/car-comments?carId=${id}&_expand=user`);
+  const { data: dataCars, isLoading: loadingCars, error: errorCars } = useFetch(["repoData", id], `cars?id=eq.${id}`);
 
-  const brandName = dataCars ? `${dataCars?.brand} ${dataCars?.model}` : id;
-  const rating = Math.round(dataCars?.rating || 0);
+  const brandName = dataCars ? `${dataCars?.[0]?.brand} ${dataCars?.[0]?.model}` : id;
+  const rating = Math.round(dataCars?.[0]?.rating || 0);
 
   const specifications = [
-    { label: "مسافت پیموده", icon: <Star1 className="size-6 stroke-neutral-gray-8" />, value: `${dataCars?.specifications?.mileage} کیلومتر` },
-    { label: "نوع دنده", icon: <Star1 className="size-6 stroke-neutral-gray-8" />, value: dataCars?.specifications?.transmission },
-    { label: "سوخت", icon: <Star1 className="size-6 stroke-neutral-gray-8" />, value: dataCars?.specifications?.fuelType },
-    { label: "ظرفیت", icon: <Star1 className="size-6 stroke-neutral-gray-8" />, value: `${dataCars?.specifications?.seatingCapacity} نفر` },
-    { label: "فرمان", icon: <Star1 className="size-6 stroke-neutral-gray-8" />, value: dataCars?.specifications?.steering },
-    { label: "مدل", icon: <Star1 className="size-6 stroke-neutral-gray-8" />, value: dataCars?.yearOfManufacture },
+    { label: "مسافت پیموده", icon: <Star1 className="size-6 stroke-neutral-gray-8" />, value: `${dataCars?.[0]?.specifications?.mileage} کیلومتر` },
+    { label: "نوع دنده", icon: <Star1 className="size-6 stroke-neutral-gray-8" />, value: dataCars?.[0]?.specifications?.transmission },
+    { label: "سوخت", icon: <Star1 className="size-6 stroke-neutral-gray-8" />, value: dataCars?.[0]?.specifications?.fuelType },
+    { label: "ظرفیت", icon: <Star1 className="size-6 stroke-neutral-gray-8" />, value: `${dataCars?.[0]?.specifications?.seatingCapacity} نفر` },
+    { label: "فرمان", icon: <Star1 className="size-6 stroke-neutral-gray-8" />, value: dataCars?.[0]?.specifications?.steering },
+    { label: "مدل", icon: <Star1 className="size-6 stroke-neutral-gray-8" />, value: dataCars?.[0]?.yearOfManufacture },
   ];
 
   const getRow = (label, getValue) => (
     <div className="grid items-center w-full grid-cols-3 py-2 text-sm border-b whitespace-nowrap md:text-base border-b-neutral-gray-2 last:border-b-0">
       <div className="col-start-1 row-start-1 text-sm font-semibold text-black">{label}</div>
-      {dataCars?.insuranceOptions?.map((item, index) => (
+      {dataCars?.[0]?.insuranceOptions?.map((item, index) => (
         <div key={item.type} className={`text-xs font-medium text-black row-start-1 ${index === 0 ? "col-start-3 text-end" : index === 1 ? "col-start-2 text-center" : ""}`}>
           {getValue(item)}
         </div>
@@ -54,8 +52,8 @@ const ProductDetail = ({ setAuthOpen }) => {
   );
 
   const priceDetails = [
-    { title: "روزانه", value: dataCars?.price?.daily?.toLocaleString() || "-" },
-    { title: "ماهانه", value: dataCars?.price?.monthly?.toLocaleString() || "-" },
+    { title: "روزانه", value: dataCars?.[0]?.price?.daily?.toLocaleString() || "-" },
+    { title: "ماهانه", value: dataCars?.[0]?.price?.monthly?.toLocaleString() || "-" },
   ];
 
   const [focus, setFocus] = useState(null);
@@ -79,7 +77,7 @@ const ProductDetail = ({ setAuthOpen }) => {
 
   const calculateTotalPrice = () => {
     const days = calculateDays();
-    const dailyPrice = dataCars?.price?.daily || 0;
+    const dailyPrice = dataCars?.[0]?.price?.daily || 0;
     return days * dailyPrice;
   };
 
@@ -167,11 +165,11 @@ const ProductDetail = ({ setAuthOpen }) => {
         carInfo: {
           id: id,
           carName: brandName,
-          carImage: `${import.meta.env.VITE_API_CARS_IMAGE}${dataCars?.Image}`,
+          carImage: `${import.meta.env.VITE_API_CARS_IMAGE}${dataCars?.[0]?.Image}`,
           price: +calculateTotalPrice(),
-          securityDeposit: dataCars?.price?.securityDeposit,
+          securityDeposit: dataCars?.[0]?.price?.securityDeposit,
         },
-        insuranceOptions: dataCars?.insuranceOptions?.find((option) => option.type === InsuranceType) || null,
+        insuranceOptions: dataCars?.[0]?.insuranceOptions?.find((option) => option.type === InsuranceType) || null,
       });
 
       navigate("/payment/1");
@@ -180,7 +178,7 @@ const ProductDetail = ({ setAuthOpen }) => {
     }
   };
 
-  if (loadingCars || errorCars || loadingCommentsCars || errorCommentsCars) {
+  if (loadingCars || errorCars) {
     return (
       <main className="w-full min-h-screen">
         <Breadcrumbs
@@ -210,7 +208,7 @@ const ProductDetail = ({ setAuthOpen }) => {
           <div className="w-full p-6 pb-3 space-y-3 bg-white border min-h-32 rounded-2xl border-neutral-gray-2">
             <div className="flex items-center justify-between w-full">
               <h1 className="text-2xl font-bold text-neutral-gray-10">
-                {dataCars?.brand} {dataCars?.model}
+                {dataCars?.[0]?.brand} {dataCars?.[0]?.model}
               </h1>
               <div className="flex flex-row-reverse items-center gap-x-1">
                 {Array.from({ length: 5 }).map((_, index) => (
@@ -223,7 +221,7 @@ const ProductDetail = ({ setAuthOpen }) => {
               <div className="w-full border-2 border-neutral-gray-2"></div>
             </div>
             <Swiper className="w-full" slidesPerView="auto" spaceBetween="8">
-              {[`حداقل سن راننده: ${dataCars?.specifications?.minimumDriverAge}`, `تعداد سرنشین: ${dataCars?.specifications?.seatingCapacity}`, `چمدان: ${dataCars?.specifications?.luggageCapacity}`].map((e, index) => (
+              {[`حداقل سن راننده: ${dataCars?.[0]?.specifications?.minimumDriverAge}`, `تعداد سرنشین: ${dataCars?.[0]?.specifications?.seatingCapacity}`, `چمدان: ${dataCars?.[0]?.specifications?.luggageCapacity}`].map((e, index) => (
                 <SwiperSlide className="min-h-8 !w-fit py-2 px-2 rounded-lg bg-neutral-gray-2/60 !flex items-center gap-x-1" key={index}>
                   <TickSquare className="size-5 fill-neutral-gray-9" variant="Outline" />
                   <span className="text-sm font-medium">{e}</span>
@@ -233,7 +231,7 @@ const ProductDetail = ({ setAuthOpen }) => {
           </div>
 
           <div className="w-full h-[503px] bg-white border border-neutral-gray-2 rounded-2xl">
-            <BaseImage src={`${import.meta.env.VITE_API_CARS_IMAGE}${dataCars?.Image}`} alt={`${dataCars?.brand} ${dataCars?.model}`} />
+            <BaseImage src={`${import.meta.env.VITE_API_CARS_IMAGE}${dataCars?.[0]?.Image}`} alt={`${dataCars?.[0]?.brand} ${dataCars?.[0]?.model}`} />
           </div>
 
           <div className="w-full p-6 pb-3 space-y-3 bg-white border min-h-32 rounded-2xl border-neutral-gray-2">
@@ -286,7 +284,7 @@ const ProductDetail = ({ setAuthOpen }) => {
               <div className="w-full border-2 border-neutral-gray-2"></div>
             </div>
             <div className="flex flex-col flex-wrap justify-start w-full gap-5 sm:flex-row sm:items-center">
-              {dataCars?.features?.map((e, index) => (
+              {dataCars?.[0]?.features?.map((e, index) => (
                 <div className="flex items-center gap-x-2.5" key={index}>
                   <div className="flex items-center justify-center w-8 h-8 border rounded-md border-neutral-gray-2">
                     <ArrowSwapVertical className="size-6 stroke-neutral-gray-8" />
@@ -306,40 +304,9 @@ const ProductDetail = ({ setAuthOpen }) => {
               <div className="w-full border-2 border-neutral-gray-2"></div>
             </div>
             <strong className="text-neutral-gray-11">
-              اجاره خودرو {dataCars?.brand} {dataCars?.model}
+              اجاره خودرو {dataCars?.[0]?.brand} {dataCars?.[0]?.model}
             </strong>
-            <p className="text-sm text-neutral-gray-11 leading-relaxed mt-2.5">{dataCars?.about}</p>
-          </div>
-
-          <div className="w-full p-6 pb-3 space-y-3 bg-white border min-h-32 rounded-2xl border-neutral-gray-2">
-            <div className="flex items-center justify-between w-full">
-              <h6 className="text-2xl font-bold text-neutral-gray-10">نظرات</h6>
-            </div>
-            <div className="relative overflow-hidden rounded-full">
-              <div className="absolute right-0 w-10 -translate-y-1/2 border-2 border-secondary top-1/2"></div>
-              <div className="w-full border-2 border-neutral-gray-2"></div>
-            </div>
-            {commentsCars?.length > 0 ? (
-              commentsCars?.map((e, index) => (
-                <div className="flex flex-col w-full p-3 border gap-y-4 border-neutral-gray-2 rounded-xl" key={index}>
-                  <div className="flex items-center justify-between w-full">
-                    <div className="flex items-center gap-x-3">
-                      <div className="w-10 h-10 overflow-hidden border rounded-xl border-neutral-gray-2">
-                        <BaseImage src={`${import.meta.env.VITE_API_PROFILE_IMAGE}${e?.user?.avatar_url}`} alt={`${e?.user?.fName} ${e?.user?.lName}`} className="object-contain w-full h-full" />
-                      </div>
-                      <p className="w-fit">تاریخ: {new Date(e.publish_date).toLocaleDateString("fa-IR")}</p>
-                    </div>
-                    <div className="flex items-center gap-x-1">
-                      <span className="text-sm font-medium">{e?.rate}</span>
-                      <Star1 color="#F4B740" size="20" variant="Bold" />
-                    </div>
-                  </div>
-                  <p className="text-sm font-medium leading-relaxed">{e?.comment}</p>
-                </div>
-              ))
-            ) : (
-              <p>کامنتی وجود ندارد</p>
-            )}
+            <p className="text-sm text-neutral-gray-11 leading-relaxed mt-2.5">{dataCars?.[0]?.about}</p>
           </div>
         </div>
 
@@ -384,7 +351,7 @@ const ProductDetail = ({ setAuthOpen }) => {
                       {index === 0 && (
                         <div className="w-full h-full sm:max-h-80">
                           {(() => {
-                            const filteredAirports = capitalAirports.filter((airport) => Array.isArray(dataCars?.deliveryAirportCode) && dataCars.deliveryAirportCode.includes(airport.code) && (airport.city.toLowerCase().includes(e.filterValue.toLowerCase()) || airport.airport.toLowerCase().includes(e.filterValue.toLowerCase()) || airport.code.toLowerCase().includes(e.filterValue.toLowerCase())));
+                            const filteredAirports = capitalAirports.filter((airport) => Array.isArray(dataCars?.[0]?.deliveryAirportCode) && dataCars?.[0]?.deliveryAirportCode.includes(airport.code) && (airport.city.toLowerCase().includes(e.filterValue.toLowerCase()) || airport.airport.toLowerCase().includes(e.filterValue.toLowerCase()) || airport.code.toLowerCase().includes(e.filterValue.toLowerCase())));
 
                             if (filteredAirports.length === 0) {
                               return <div className="p-4 text-start text-neutral-gray-7">هیچ فرودگاهی با این نام یافت نشد.</div>;

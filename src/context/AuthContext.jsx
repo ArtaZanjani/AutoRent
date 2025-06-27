@@ -1,85 +1,91 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
-import { jwtDecode } from "jwt-decode";
 import { toast } from "sonner";
+import { jwtDecode } from "jwt-decode";
 
-const TOKEN_KEY = "user_token";
+const TOKEN_KEY = "supabase_token";
+
 const AuthContext = createContext(null);
 
+const getUserIdFromToken = (token) => {
+  try {
+    const decoded = jwtDecode(token);
+    return decoded.sub;
+  } catch {
+    return null;
+  }
+};
+
 export const AuthProvider = ({ children }) => {
-  const [userToken, setUserTokenState] = useState(() => localStorage.getItem(TOKEN_KEY));
+  const [token, setToken] = useState(() => localStorage.getItem(TOKEN_KEY));
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const setUserToken = useCallback((token) => {
     if (token) {
       localStorage.setItem(TOKEN_KEY, token);
-      setUserTokenState(token);
+      setToken(token);
     } else {
       localStorage.removeItem(TOKEN_KEY);
-      setUserTokenState(null);
+      setToken(null);
       setUserInfo(null);
     }
   }, []);
 
   const logout = useCallback(() => setUserToken(null), [setUserToken]);
 
-  const checkToken = useCallback(async () => {
-    const token = localStorage.getItem(TOKEN_KEY);
-
+  const fetchUserInfo = useCallback(async () => {
     if (!token) {
-      setLoading(false);
       setUserInfo(null);
-      setUserTokenState(null);
+      setLoading(false);
       return;
     }
 
-    let userId;
-    try {
-      const decoded = jwtDecode(token);
-      userId = decoded.sub || decoded.userId || decoded.id;
-    } catch {
-      setUserToken(null);
+    setLoading(true);
+
+    const userId = getUserIdFromToken(token);
+
+    if (!userId) {
+      setUserInfo(null);
       setLoading(false);
       return;
     }
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/600/users/${userId}`, {
-        headers: { Authorization: `Bearer ${token}` },
+      const res = await fetch(`${import.meta.env.VITE_API_URL}profiles?id=eq.${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          apikey: import.meta.env.VITE_API_KEY,
+          Accept: "application/json",
+        },
       });
 
       if (!res.ok) {
         setUserToken(null);
         setUserInfo(null);
-        setLoading(false);
-        return;
-      }
+      } else {
+        const data = await res.json();
 
-      const data = await res.json();
-      setUserInfo(data);
-      setUserTokenState(token);
-      toast.info(`${data.fName} ${data.lName} عزیز خوش امدی`);
-    } catch {
+        const dataInfo = data[0];
+
+        setUserInfo({ id: userId, fName: dataInfo.fName, lName: dataInfo.lName, email: dataInfo.email, nationalId: dataInfo.nationalId });
+
+        toast.info(`${dataInfo.fName} ${dataInfo.lName} عزیز خوش اومدی`);
+      }
+    } catch (err) {
       setUserToken(null);
       setUserInfo(null);
     } finally {
       setLoading(false);
     }
-  }, [setUserToken]);
+  }, [token, setUserToken]);
 
   useEffect(() => {
-    checkToken();
-  }, [checkToken]);
+    fetchUserInfo();
+  }, [fetchUserInfo]);
 
-  useEffect(() => {
-    if (userToken) {
-      checkToken();
-    }
-  }, [userToken, checkToken]);
+  const isLoggedIn = !!token;
 
-  const isLoggedIn = !!userToken;
-
-  return <AuthContext.Provider value={{ userToken, userInfo, setUserInfo, setUserToken, isLoggedIn, logout, loading }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ token, userInfo, setUserInfo, setUserToken, isLoggedIn, logout, loading }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {
