@@ -174,8 +174,8 @@ const Auth = ({ isAuthOpen, onClose }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          apikey: import.meta.env.VITE_SERVICE_ROLE_KEY,
-          Authorization: `Bearer ${import.meta.env.VITE_SERVICE_ROLE_KEY}`,
+          apikey: import.meta.env.VITE_API_KEY,
+          Authorization: `Bearer ${authData.access_token}`,
         },
         body: JSON.stringify({
           id: authData.user.id,
