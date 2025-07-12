@@ -30,4 +30,5 @@
 | Shadcn UI     | UI component library        |
 | Framer Motion | Animation library for React |
 | Swiper        | JavaScript library for sliders |
+| Leaflet       | Interactive maps library |
 | Iconsax       | Icon font scripts           |
