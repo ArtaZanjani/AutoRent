@@ -22,11 +22,11 @@ const ContactUs = () => {
   const dataContact = [
     {
       icon: <Location className="size-6 stroke-neutral-gray-8" />,
-      description: "تهران، میدان آزادی، خیابان آزادی، خیابان شادمان، پلاک 23",
+      description: "تهران، میدان آزادی، خیابان آزادی",
     },
     {
       icon: <Call className="size-6 stroke-neutral-gray-8" />,
-      description: "02166552589",
+      description: "0123456789",
     },
     {
       icon: <Sms className="size-6 stroke-neutral-gray-8" />,
