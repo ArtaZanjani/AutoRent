@@ -22,15 +22,15 @@ const ContactUs = () => {
   const dataContact = [
     {
       icon: <Location className="size-6 stroke-neutral-gray-8" />,
-      description: "تهران، میدان آزادی، خیابان آزادی",
+      description: "ایران، تهران",
     },
     {
       icon: <Call className="size-6 stroke-neutral-gray-8" />,
-      description: "0123456789",
+      description: "+XX XXXX XXXX",
     },
     {
       icon: <Sms className="size-6 stroke-neutral-gray-8" />,
-      description: "info@AutoRent.com",
+      description: "example@domain.com",
     },
   ];
 

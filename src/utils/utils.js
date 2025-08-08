@@ -13,17 +13,17 @@ export const navFooter = [
     title: "راه های ارتباطی",
     items: [
       {
-        title: "شماره تلفن: 0123456789",
-        path: "tel:+980123456789",
+        title: "شماره تلفن: +XX XXXX XXXX",
+        path: "tel:+XX XXXX XXXX",
       },
       {
-        title: "ایمیل: autorent@info.com",
-        path: "mailto:autorent@info.com",
+        title: "ایمیل: example@domain.com",
+        path: "mailto:example@domain.com",
       },
       {
         title: "آدرس",
-        label: "آدرس: تهران- خ شادمان",
-        path: "https://www.google.com/maps",
+        label: "ایران، تهران",
+        path: "/",
       },
     ],
   },
