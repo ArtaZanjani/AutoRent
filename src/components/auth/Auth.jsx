@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import BaseBg from "@/components/common/BaseBg";
-import { motion } from "motion/react";
 import isEmail from "validator/lib/isEmail";
 import BaseImage from "@/components/common/BaseImage";
+import { motion } from "motion/react";
 import CheckBox from "@/components/common/CheckBox";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { Add, UserSquare, SecurityUser, Sms, Eye, EyeSlash } from "iconsax-react";
 import { validatePassword, validateCodeMeli, persianRegex } from "@/utils/function";
 import Logo from "@/assets/icons/Logo.webp";
+import { translateSupabaseAuthError } from "@/utils/error";
 
 const baseInputs = [
   { id: "email", icon: Sms, label: "ایمیل", value: "", error: "", type: "email" },
@@ -113,6 +114,7 @@ const Auth = ({ isAuthOpen, onClose }) => {
         headers: {
           "Content-Type": "application/json",
           apikey: import.meta.env.VITE_API_KEY,
+          Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
         },
         body: JSON.stringify({
           email,
@@ -123,14 +125,13 @@ const Auth = ({ isAuthOpen, onClose }) => {
       const data = await response.json();
 
       if (!response.ok) {
-        toast.error(data.error_description || "خطا در ورود");
+        toast.error(translateSupabaseAuthError(data.msg) || "خطا در ورود");
         return;
       }
 
       setUserToken(data.access_token);
     } catch (error) {
-      console.error("Login error:", error);
-      toast.error("خطای اتصال به سرور");
+      toast.error(translateSupabaseAuthError(error.message) || "خطای اتصال به سرور");
     }
   };
 
@@ -163,12 +164,12 @@ const Auth = ({ isAuthOpen, onClose }) => {
         }),
       });
 
+      const authData = await response.json();
+
       if (!response.ok) {
-        toast.error(response.status);
+        toast.error(translateSupabaseAuthError(authData.msg) || "خطا در ورود");
         return;
       }
-
-      const authData = await response.json();
 
       const profileResponse = await fetch(`${import.meta.env.VITE_API_URL}/profiles`, {
         method: "POST",
@@ -194,8 +195,7 @@ const Auth = ({ isAuthOpen, onClose }) => {
       toast.success("حساب و پروفایل با موفقیت ساخته شد");
       setUserToken(authData.access_token);
     } catch (error) {
-      console.log(error.message);
-      toast.error(error.message);
+      toast.error(translateSupabaseAuthError(error.message) || "خطای اتصال به سرور");
     }
   };
 
