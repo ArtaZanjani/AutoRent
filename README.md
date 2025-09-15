@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="https://m7a1s.github.io/AutoRent/">
+  <a href="https://artazanjani.github.io/AutoRent/">
     <img src="./src/assets/icons/Logo.webp" width="200" alt="Auto Rent Logo" />
   </a>
 </div>
@@ -7,7 +7,7 @@
 <h3 align="center">Auto Rent</h3>
 
 <p align="center">
-  <a href="https://m7a1s.github.io/AutoRent/" style="margin: 0 10px;">View Demo</a>
+  <a href="https://artazanjani.github.io/AutoRent/" style="margin: 0 10px;">View Demo</a>
 </p>
 
 ## 📸 Preview

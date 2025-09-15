@@ -12,7 +12,7 @@ A clear and concise description of what the bug is.
 
 **To Reproduce**
 Steps to reproduce the behavior:
-1. Go to 'https://m7a1s.github.io/AutoRent/'
+1. Go to 'https://artazanjani.github.io/AutoRent/'
 2. Open Console
 3. See error
 
